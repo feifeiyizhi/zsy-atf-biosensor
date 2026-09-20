@@ -1,5 +1,9 @@
 # zsy-atf-biosensor — TetR aTF 胆酸生物传感器定向进化建模
 
+### 👉 展示页（点开直接看，含结果 + 思维图）：**https://feifeiyizhi.github.io/zsy-atf-biosensor/**
+
+---
+
 TetR 家族变构转录因子（aTF, 204 aa）胆酸生物传感器的定向进化**计算建模**课题公开镜像。
 本仓只含**进度文档、方法与可复现分析脚本、分析产物**。
 
