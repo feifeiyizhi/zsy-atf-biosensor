@@ -1,0 +1,402 @@
+[
+ {
+  "pid": "3CDL",
+  "identity": 33.5,
+  "seq_len": 203,
+  "matched": 68,
+  "aligned_len": 200,
+  "has_ligand": false
+ },
+ {
+  "pid": "3BHQ",
+  "identity": 27.5,
+  "seq_len": 211,
+  "matched": 58,
+  "aligned_len": 199,
+  "has_ligand": false
+ },
+ {
+  "pid": "2Q24",
+  "identity": 23.6,
+  "seq_len": 194,
+  "matched": 48,
+  "aligned_len": 189,
+  "has_ligand": false
+ },
+ {
+  "pid": "3GZI",
+  "identity": 23.4,
+  "seq_len": 218,
+  "matched": 51,
+  "aligned_len": 194,
+  "has_ligand": false
+ },
+ {
+  "pid": "3CCY",
+  "identity": 23.2,
+  "seq_len": 203,
+  "matched": 47,
+  "aligned_len": 196,
+  "has_ligand": false
+ },
+ {
+  "pid": "2G3B",
+  "identity": 23.1,
+  "seq_len": 208,
+  "matched": 48,
+  "aligned_len": 192,
+  "has_ligand": false
+ },
+ {
+  "pid": "8Z6E",
+  "identity": 22.7,
+  "seq_len": 197,
+  "matched": 46,
+  "aligned_len": 180,
+  "has_ligand": false
+ },
+ {
+  "pid": "3DCF",
+  "identity": 22.5,
+  "seq_len": 218,
+  "matched": 49,
+  "aligned_len": 195,
+  "has_ligand": false
+ },
+ {
+  "pid": "3B81",
+  "identity": 22.2,
+  "seq_len": 203,
+  "matched": 45,
+  "aligned_len": 191,
+  "has_ligand": false
+ },
+ {
+  "pid": "2REK",
+  "identity": 22.2,
+  "seq_len": 199,
+  "matched": 45,
+  "aligned_len": 189,
+  "has_ligand": false
+ },
+ {
+  "pid": "3EGQ",
+  "identity": 21.7,
+  "seq_len": 170,
+  "matched": 44,
+  "aligned_len": 169,
+  "has_ligand": false
+ },
+ {
+  "pid": "2FQ4",
+  "identity": 21.7,
+  "seq_len": 192,
+  "matched": 44,
+  "aligned_len": 189,
+  "has_ligand": false
+ },
+ {
+  "pid": "4JKZ",
+  "identity": 21.7,
+  "seq_len": 194,
+  "matched": 44,
+  "aligned_len": 186,
+  "has_ligand": false
+ },
+ {
+  "pid": "2NX4",
+  "identity": 21.7,
+  "seq_len": 194,
+  "matched": 44,
+  "aligned_len": 190,
+  "has_ligand": false
+ },
+ {
+  "pid": "3CJD",
+  "identity": 21.7,
+  "seq_len": 198,
+  "matched": 44,
+  "aligned_len": 189,
+  "has_ligand": false
+ },
+ {
+  "pid": "1Z0X",
+  "identity": 21.4,
+  "seq_len": 220,
+  "matched": 47,
+  "aligned_len": 193,
+  "has_ligand": false
+ },
+ {
+  "pid": "4ME9",
+  "identity": 21.2,
+  "seq_len": 189,
+  "matched": 43,
+  "aligned_len": 185,
+  "has_ligand": false
+ },
+ {
+  "pid": "3NNR",
+  "identity": 21.1,
+  "seq_len": 228,
+  "matched": 48,
+  "aligned_len": 196,
+  "has_ligand": false
+ },
+ {
+  "pid": "2RAE",
+  "identity": 20.8,
+  "seq_len": 207,
+  "matched": 43,
+  "aligned_len": 193,
+  "has_ligand": false
+ },
+ {
+  "pid": "3C2B",
+  "identity": 20.8,
+  "seq_len": 221,
+  "matched": 46,
+  "aligned_len": 202,
+  "has_ligand": false
+ },
+ {
+  "pid": "2ZCX",
+  "identity": 20.8,
+  "seq_len": 231,
+  "matched": 48,
+  "aligned_len": 193,
+  "has_ligand": false
+ },
+ {
+  "pid": "2RAS",
+  "identity": 20.8,
+  "seq_len": 212,
+  "matched": 44,
+  "aligned_len": 189,
+  "has_ligand": false
+ },
+ {
+  "pid": "2IEK",
+  "identity": 20.7,
+  "seq_len": 200,
+  "matched": 42,
+  "aligned_len": 192,
+  "has_ligand": false
+ },
+ {
+  "pid": "1Z77",
+  "identity": 20.7,
+  "seq_len": 200,
+  "matched": 42,
+  "aligned_len": 192,
+  "has_ligand": false
+ },
+ {
+  "pid": "3VPR",
+  "identity": 20.7,
+  "seq_len": 190,
+  "matched": 42,
+  "aligned_len": 187,
+  "has_ligand": false
+ },
+ {
+  "pid": "5XS9",
+  "identity": 20.5,
+  "seq_len": 205,
+  "matched": 42,
+  "aligned_len": 190,
+  "has_ligand": false
+ },
+ {
+  "pid": "2ID6",
+  "identity": 20.2,
+  "seq_len": 202,
+  "matched": 41,
+  "aligned_len": 194,
+  "has_ligand": false
+ },
+ {
+  "pid": "3IH2",
+  "identity": 20.2,
+  "seq_len": 202,
+  "matched": 41,
+  "aligned_len": 194,
+  "has_ligand": false
+ },
+ {
+  "pid": "3IH3",
+  "identity": 20.2,
+  "seq_len": 202,
+  "matched": 41,
+  "aligned_len": 194,
+  "has_ligand": false
+ },
+ {
+  "pid": "3IH4",
+  "identity": 20.2,
+  "seq_len": 202,
+  "matched": 41,
+  "aligned_len": 194,
+  "has_ligand": false
+ },
+ {
+  "pid": "4I76",
+  "identity": 20.2,
+  "seq_len": 202,
+  "matched": 41,
+  "aligned_len": 194,
+  "has_ligand": false
+ },
+ {
+  "pid": "4I6Z",
+  "identity": 20.2,
+  "seq_len": 202,
+  "matched": 41,
+  "aligned_len": 194,
+  "has_ligand": false
+ },
+ {
+  "pid": "3HE0",
+  "identity": 20.2,
+  "seq_len": 196,
+  "matched": 41,
+  "aligned_len": 193,
+  "has_ligand": false
+ },
+ {
+  "pid": "3BNI",
+  "identity": 20.1,
+  "seq_len": 229,
+  "matched": 46,
+  "aligned_len": 197,
+  "has_ligand": false
+ },
+ {
+  "pid": "1ZKG",
+  "identity": 19.8,
+  "seq_len": 212,
+  "matched": 42,
+  "aligned_len": 199,
+  "has_ligand": false
+ },
+ {
+  "pid": "3VUQ",
+  "identity": 19.7,
+  "seq_len": 187,
+  "matched": 40,
+  "aligned_len": 181,
+  "has_ligand": false
+ },
+ {
+  "pid": "3LWJ",
+  "identity": 19.7,
+  "seq_len": 202,
+  "matched": 40,
+  "aligned_len": 194,
+  "has_ligand": false
+ },
+ {
+  "pid": "3CWR",
+  "identity": 19.7,
+  "seq_len": 208,
+  "matched": 41,
+  "aligned_len": 199,
+  "has_ligand": false
+ },
+ {
+  "pid": "2HYT",
+  "identity": 19.7,
+  "seq_len": 197,
+  "matched": 40,
+  "aligned_len": 193,
+  "has_ligand": false
+ },
+ {
+  "pid": "8Z0C",
+  "identity": 19.7,
+  "seq_len": 186,
+  "matched": 40,
+  "aligned_len": 185,
+  "has_ligand": false
+ },
+ {
+  "pid": "3C07",
+  "identity": 19.4,
+  "seq_len": 273,
+  "matched": 53,
+  "aligned_len": 201,
+  "has_ligand": false
+ },
+ {
+  "pid": "3S5R",
+  "identity": 19.4,
+  "seq_len": 216,
+  "matched": 42,
+  "aligned_len": 199,
+  "has_ligand": false
+ },
+ {
+  "pid": "3KNW",
+  "identity": 18.9,
+  "seq_len": 212,
+  "matched": 40,
+  "aligned_len": 199,
+  "has_ligand": false
+ },
+ {
+  "pid": "2OF7",
+  "identity": 18.5,
+  "seq_len": 260,
+  "matched": 48,
+  "aligned_len": 194,
+  "has_ligand": false
+ },
+ {
+  "pid": "5YEK",
+  "identity": 18.5,
+  "seq_len": 232,
+  "matched": 43,
+  "aligned_len": 197,
+  "has_ligand": false
+ },
+ {
+  "pid": "2GUH",
+  "identity": 18.2,
+  "seq_len": 214,
+  "matched": 39,
+  "aligned_len": 199,
+  "has_ligand": false
+ },
+ {
+  "pid": "2QIB",
+  "identity": 16.9,
+  "seq_len": 231,
+  "matched": 39,
+  "aligned_len": 202,
+  "has_ligand": false
+ },
+ {
+  "pid": "2G7S",
+  "identity": 16.7,
+  "seq_len": 194,
+  "matched": 34,
+  "aligned_len": 191,
+  "has_ligand": false
+ },
+ {
+  "pid": "3EUP",
+  "identity": 16.7,
+  "seq_len": 204,
+  "matched": 34,
+  "aligned_len": 199,
+  "has_ligand": false
+ },
+ {
+  "pid": "3FIW",
+  "identity": 15.2,
+  "seq_len": 211,
+  "matched": 32,
+  "aligned_len": 196,
+  "has_ligand": false
+ }
+]

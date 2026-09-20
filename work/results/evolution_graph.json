@@ -1,0 +1,98 @@
+{
+  "n_nodes": 6840,
+  "n_edges": 9068,
+  "n_connected": 5525,
+  "frac_connected": 0.8077485380116959,
+  "deg_out_mean": 1.3257309941520468,
+  "deg_in_mean": 1.3257309941520468,
+  "df_up_frac": 0.48875165416850463,
+  "df_down_frac": 0.5112483458314954,
+  "valley_nodes": 862,
+  "longest_chain": 11,
+  "n_mut_range": [
+    3,
+    16
+  ],
+  "valley_examples": [
+    {
+      "parent_fit": 0.976,
+      "valley_fit": 0.787,
+      "child_fit": 1.028,
+      "dip": -0.188,
+      "rise": 0.241,
+      "n_mut": 9,
+      "step_p2v": "F163M",
+      "step_v2c": "S161A"
+    },
+    {
+      "parent_fit": 0.644,
+      "valley_fit": 0.623,
+      "child_fit": 0.746,
+      "dip": -0.021,
+      "rise": 0.122,
+      "n_mut": 7,
+      "step_p2v": "I128V",
+      "step_v2c": "Y75F"
+    },
+    {
+      "parent_fit": 0.6,
+      "valley_fit": 0.533,
+      "child_fit": 0.605,
+      "dip": -0.066,
+      "rise": 0.072,
+      "n_mut": 10,
+      "step_p2v": "Y159W",
+      "step_v2c": "S161A"
+    },
+    {
+      "parent_fit": 0.663,
+      "valley_fit": 0.481,
+      "child_fit": 0.701,
+      "dip": -0.182,
+      "rise": 0.22,
+      "n_mut": 10,
+      "step_p2v": "V69L",
+      "step_v2c": "Y75F"
+    },
+    {
+      "parent_fit": 0.533,
+      "valley_fit": 0.466,
+      "child_fit": 0.85,
+      "dip": -0.067,
+      "rise": 0.385,
+      "n_mut": 8,
+      "step_p2v": "Y159W",
+      "step_v2c": "Y129F"
+    },
+    {
+      "parent_fit": 0.609,
+      "valley_fit": 0.462,
+      "child_fit": 0.898,
+      "dip": -0.147,
+      "rise": 0.435,
+      "n_mut": 10,
+      "step_p2v": "I125M",
+      "step_v2c": "V111I"
+    },
+    {
+      "parent_fit": 0.672,
+      "valley_fit": 0.451,
+      "child_fit": 1.105,
+      "dip": -0.221,
+      "rise": 0.654,
+      "n_mut": 11,
+      "step_p2v": "N66F",
+      "step_v2c": "Y129F"
+    },
+    {
+      "parent_fit": 0.565,
+      "valley_fit": 0.44,
+      "child_fit": 0.985,
+      "dip": -0.124,
+      "rise": 0.544,
+      "n_mut": 11,
+      "step_p2v": "N66F",
+      "step_v2c": "E94A"
+    }
+  ]
+}

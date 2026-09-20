@@ -1,0 +1,36 @@
+# 数据 / 权重 / 大文件 —— 永不公开
+*.zip
+*.fastq
+*_fastq
+*_fastq/
+*.csv
+*.npy
+*.pt
+*.pkl
+*.pdf
+*.pptx
+*.docx
+*.xlsx
+*.cif
+*.a3m
+*.fasta
+
+# 凭据 / 运维脚本
+transfer_*.py
+probe_4090.py
+monitor_rental.py
+fold_*.py
+fold_*.sh
+cluster_*.sh
+*.env
+*secret*
+*credential*
+
+# 合作方原始数据目录
+work/anclaci/
+work/tsm2/
+work/tsm_results/
+work/openfold_local/
+
+__pycache__/
+*.pyc

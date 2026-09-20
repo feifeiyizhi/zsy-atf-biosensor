@@ -1,0 +1,28 @@
+%% zsy aTF 胆酸生物传感器 — 实验流程图(2026-09-13 PI 汇报)
+%% 渲染: mermaid-cli 或 https://mermaid.live
+flowchart TD
+    H["假设:结构+配体特征是跨胆酸泛化关键<br/>纯序列PLM不够"] --> D1
+    D1["数据:338lib负筛109134变体<br/>6胆酸群体测序<br/>28克隆3实验<br/>AncLacI参照1158"] --> S
+    S["结构线:3CDL同源33%+ProDy ANM<br/>→自身ESMFold pLDDT94.3<br/>Q164↔HTH 32.7Å / ANM-0.394"] --> F
+    F["四物理约束→四特征<br/>1别构远程→allosteric_score<br/>2配体结构→胆酸Morgan<br/>3静态不敏感→ANM动力学<br/>4通用PLM不足→三路融合"] --> M
+    M["建模:ESM2 3B + Ridge<br/>特征消融5臂 A→E"] --> E1
+    E1["评估1:LOO 28克隆<br/>+结构+胆酸=0.402"] --> E2
+    E2["评估2:时序零泄露<br/>CDCA+PCA→4新靶点<br/>AUC0.777"] --> E3
+    E3["评估3:跨实验零样本<br/>6迁移方向"] --> J
+    J["主判据:7k-LCA↔CDCA<br/>ρ -0.37 → +0.37 双向翻转"] --> C
+    C["claim:结构+配体是泛化关键<br/>PRELIMINARY-待CI"] --> X
+    X["外推:靶点特异预测<br/>需补7位组数据+SMILES对接"]
+
+    W["风险侧支<br/>28样本无CI RED<br/>无git/控制面 RED<br/>23kPCA origin偏移 YELLOW"]
+
+    S -. "今晨工程:4090折叠+base64两跳拉回" .-> S2["已解决:env_kit固化"]
+    S -. "曾受阻:H800抢占+无外网+openfold装不动" .-> S3["已绕过:3CDL+ANM兜底,后4090补自身结构"]
+    E2 -. "曾失败:跨靶点转移top-50召回1/14" .-> E2F["已诊断:训练集缺7位组代表非方法错"]
+    J -. "今晨修正:Q136L origin归类错误" .-> JF["已修:去骨架后梯度翻转与fc同向"]
+
+    classDef done fill:#d4edda,stroke:#28a745
+    classDef partial fill:#fff3cd,stroke:#ffc107
+    classDef risk fill:#f8d7da,stroke:#dc3545
+    class D1,S,F,M,E1,E2,E3,J,S2,E2F,JF done
+    class C,X partial
+    class W,S3 risk

@@ -1,0 +1,44 @@
+{
+ "CDCA_鹅脱氧": {
+  "name": "chenodeoxycholic acid",
+  "smiles": "CC(CCC(=O)O)C1CCC2C1(CCC3C2C(CC4C3(CCC(C4)O)C)O)C",
+  "mw": "392.6",
+  "cid": 10133
+ },
+ "UDCA_熊脱氧(原LLDCA)": {
+  "name": "ursodeoxycholic acid",
+  "smiles": "CC(CCC(=O)O)C1CCC2C1(CCC3C2C(CC4C3(CCC(C4)O)C)O)C",
+  "mw": "392.6",
+  "cid": 31401
+ },
+ "LCA_石胆": {
+  "name": "lithocholic acid",
+  "smiles": "CC(CCC(=O)O)C1CCC2C1(CCC3C2CCC4C3(CCC(C4)O)C)C",
+  "mw": "376.6",
+  "cid": 9903
+ },
+ "7K-LCA": {
+  "name": "7-ketolithocholic acid",
+  "smiles": "CC(CCC(=O)O)C1CCC2C1(CCC3C2C(=O)CC4C3(CCC(C4)O)C)C",
+  "mw": "390.6",
+  "cid": 444262
+ },
+ "23K-CDCA": {
+  "name": "3alpha,7alpha-dihydroxy-23-oxo-5beta-cholan-24-oic acid",
+  "smiles": null,
+  "mw": null,
+  "cid": "HTTP Error 404: PUGREST.NotFound"
+ },
+ "DCA_脱氧(参考)": {
+  "name": "deoxycholic acid",
+  "smiles": "CC(CCC(=O)O)C1CCC2C1(C(CC3C2CCC4C3(CCC(C4)O)C)O)C",
+  "mw": "392.6",
+  "cid": 222528
+ },
+ "CA_胆酸(参考)": {
+  "name": "cholic acid",
+  "smiles": "CC(CCC(=O)O)C1CCC2C1(C(CC3C2C(CC4C3(CCC(C4)O)C)O)O)C",
+  "mw": "408.6",
+  "cid": 221493
+ }
+}
