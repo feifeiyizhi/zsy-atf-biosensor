@@ -2,6 +2,8 @@
 
 Computational analysis of directed evolution and ligand-dependent sequence–function landscapes.
 
+![Project overview](docs/assets/4.webp)
+
 **Current status → [STATUS.md](STATUS.md)**
 **Evidence → [docs/EVIDENCE.md](docs/EVIDENCE.md)**
 **Project page → https://feifeiyizhi.github.io/zsy-atf-biosensor/**
