@@ -54,14 +54,9 @@ verifiable planning benchmark
 
 **Current next step:** build the strong-valley benchmark.
 
-## Evidence index
+## Evidence
 
-- [Bile-acid selections](docs/evidence/SELECTIONS.md)
-- [Structure](docs/evidence/STRUCTURE.md)
-- [GraphWalks](docs/evidence/GRAPHWALKS.md)
-- [Prediction / recommender](docs/evidence/PREDICTION.md)
-- [Claims ledger](docs/evidence/CLAIMS.md)
-- [Next experiment](docs/next/NEXT_STAGE_ASSESSMENT_20260914.md)
+See [`docs/EVIDENCE.md`](docs/EVIDENCE.md) for the source files and reproducible outputs behind this status.
 
 ## Explicit non-claims
 
