@@ -1,0 +1,27 @@
+{
+  "source": "/mnt/workspace/ray/0724/0815zsypre/work/anclaci",
+  "rows": 2280,
+  "datasets": {
+    "LGF": 1158,
+    "DMS": 1122
+  },
+  "bad_sequence_lengths": 0,
+  "dms_non_single_mutants": 0,
+  "dms_wt_rows": 1,
+  "lgf_consensus_coordinate_only": true,
+  "graph_knn": 34,
+  "graph_local_peaks": {
+    "DMS": 38,
+    "LGF": 29
+  },
+  "fitness_ranges": {
+    "DMS": [
+      -9.96578428466209,
+      0.932165567194825
+    ],
+    "LGF": [
+      -9.96578428466209,
+      6.92621405280688
+    ]
+  }
+}
