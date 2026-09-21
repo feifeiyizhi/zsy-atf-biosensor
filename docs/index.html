@@ -1,143 +1,41 @@
 <!doctype html>
-<html lang="zh">
+<html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>zsy aTF 胆酸生物传感器 · 进度展示</title>
-<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TetR bile-acid biosensor</title>
 <style>
-  :root{color-scheme:light;--bg:#f7f7f5;--card:#fff;--ink:#1a1a1a;--mut:#666;--line:#e5e5e0;--accent:#2b6cb0;--hot:#c53030;--ok:#2f855a;--warn:#b7791f}
-  *{box-sizing:border-box}
-  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans CJK SC",sans-serif}
-  .wrap{max-width:920px;margin:0 auto;padding:32px 20px 80px}
-  h1{font-size:26px;margin:0 0 4px}
-  .sub{color:var(--mut);margin:0 0 24px}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px 22px;margin:18px 0}
-  h2{font-size:19px;margin:0 0 12px;padding-bottom:8px;border-bottom:2px solid var(--line)}
-  h3{font-size:15px;margin:18px 0 8px;color:var(--accent)}
-  table{border-collapse:collapse;width:100%;font-size:13.5px;margin:8px 0}
-  th,td{border:1px solid var(--line);padding:6px 9px;text-align:center}
-  th{background:#faf9f6;font-weight:600}
-  td.l,th.l{text-align:left}
-  .tag{display:inline-block;font-size:11px;padding:1px 7px;border-radius:10px;font-weight:600}
-  .t-ok{background:#e6fffa;color:var(--ok)} .t-hot{background:#fff5f5;color:var(--hot)} .t-warn{background:#fffaf0;color:var(--warn)}
-  .hot{color:var(--hot);font-weight:700}
-  .note{font-size:13px;color:var(--mut);background:#fbfbf9;border-left:3px solid var(--accent);padding:8px 12px;margin:10px 0;border-radius:0 6px 6px 0}
-  .mermaid{background:#fff;border-radius:8px;padding:12px;overflow-x:auto;text-align:center}
-  code{background:#f0f0ec;padding:1px 5px;border-radius:4px;font-size:12.5px}
-  .grid2{overflow-x:auto}
-  footer{color:var(--mut);font-size:12px;margin-top:30px;text-align:center}
+:root{--bg:#f7f8fa;--card:#fff;--ink:#17202a;--mut:#667085;--line:#e4e7ec;--blue:#175cd3;--green:#067647;--amber:#b54708}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.wrap{max-width:960px;margin:auto;padding:48px 20px 72px}h1{font-size:32px;line-height:1.2;margin:0 0 8px}.lead{color:var(--mut);font-size:17px;margin:0 0 28px}.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px;margin:16px 0}h2{font-size:20px;margin:0 0 16px}h3{font-size:16px;margin:18px 0 6px}.eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--blue);font-weight:700}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.col{border:1px solid var(--line);border-radius:10px;padding:14px}.col h3{margin-top:0}.col.est h3{color:var(--green)}.col.no h3{color:var(--amber)}.col.next h3{color:var(--blue)}ul{margin:8px 0 0;padding-left:20px}.tracks{display:grid;grid-template-columns:1fr 1fr;gap:16px}.track{border-left:4px solid var(--blue);padding:0 0 0 16px}.track:first-child{border-color:var(--green)}pre{white-space:pre-wrap;background:#f8fafc;border-radius:8px;padding:12px;font-size:13px;color:#344054}a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}.links{display:flex;flex-wrap:wrap;gap:10px}.links a{border:1px solid var(--line);background:#fff;border-radius:8px;padding:8px 12px}footer{color:var(--mut);font-size:12px;margin-top:28px}@media(max-width:700px){.grid,.tracks{grid-template-columns:1fr}.wrap{padding-top:28px}}
 </style>
 </head>
-<body>
-<div class="wrap">
-  <h1>TetR aTF 胆酸生物传感器 · 定向进化建模</h1>
-  <p class="sub">进度展示页 · 更新 2026-09-20 · 数据来源：6 胆酸靶点纳米孔群体测序 + 结构（自身 ESMFold / 3CDL）</p>
+<body><main class="wrap">
+<div class="eyebrow">Research status</div>
+<h1>TetR-family bile-acid biosensor engineering</h1>
+<p class="lead">Mapping sequence–function landscapes and testing whether structural and landscape information can guide the next mutation.</p>
 
-  <div class="card">
-    <h2>一句话现状</h2>
-    <p><b class="hot">Q164R 已确认是 6 种胆酸通用的响应开关</b>（配体口袋壁，直接围胆酸）。结构 + 单配体的零样本机制已立住；
-    <b>"跨胆酸/跨蛋白泛化"尚未建立</b>（bootstrap CI 跨零），等配对表型（round-0 基线 + FACS 剂量响应）湿实验。
-    GraphWalks 任务化 = 当前不依赖湿实验、可推进论文的最优方向。</p>
-  </div>
+<section class="card"><h2>Project</h2><p><b>DNA-binding evolution landscape</b><br>338lib · 17 designed sites · 6,840 reliable variants</p><p><b>Bile-acid selections</b><br>6 ligands · nanopore selection pools</p></section>
 
-  <div class="card">
-    <h2>① 每组测序出现的具体突变</h2>
-    <div class="note">数据 = 纳米孔<b>群体测序突变频率</b>（%=该突变在该组占比），<b>非</b>基因型×活性。频率高≠效应大，可能是起始池富集 —— 需补 lib0 基线校正。</div>
-    <div class="grid2">
-    <table>
-      <tr><th class="l">突变</th><th>CDCA</th><th>PCA</th><th>7K-LCA</th><th>23K-CDCA</th><th>LCA</th><th>LLDCA</th><th class="l">性质</th></tr>
-      <tr><td class="l hot">Q164R</td><td>16.6</td><td>99.6</td><td>99.4</td><td>99.8</td><td>99.2</td><td>98.2</td><td class="l"><span class="tag t-hot">6靶点通用开关</span></td></tr>
-      <tr><td class="l">I73N</td><td class="hot">26.6</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td><td class="l">CDCA 特异</td></tr>
-      <tr><td class="l">L177S</td><td>–</td><td>10.3</td><td>–</td><td>–</td><td>–</td><td>–</td><td class="l">PCA 特异（侧链C23组）</td></tr>
-      <tr><td class="l">D176N</td><td>–</td><td>–</td><td class="hot">73.3</td><td>–</td><td>–</td><td>–</td><td class="l">7K-LCA 特异（高频，7位组）</td></tr>
-      <tr><td class="l">E143D</td><td>–</td><td>7</td><td>–</td><td>28.3</td><td>–</td><td>–</td><td class="l">C23组共享</td></tr>
-      <tr><td class="l">I64T / K93I / P152L</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td><td>16 / 10 / 16</td><td class="l">LLDCA 多突变（7位组）</td></tr>
-    </table>
-    </div>
-    <h3>各组完整清单（含口袋外低频 ≥2%，R116Q 为骨架固定已标注）</h3>
-    <table>
-      <tr><th class="l">组</th><th class="l">显著突变（频率）</th></tr>
-      <tr><td class="l">CDCA</td><td class="l">I73N(27%) · P152L(2%) · <span class="hot">Q164R(17%)</span> · R116Q(100%骨架)</td></tr>
-      <tr><td class="l">PCA</td><td class="l">P79S(10%) · A133T(3%) · E143D(7%) · L177S(10%) · <span class="hot">Q164R(100%)</span></td></tr>
-      <tr><td class="l">7K-LCA</td><td class="l">P152S(10%) · V158A(9%) · H174Y(8%) · <span class="hot">D176N(73%)</span> · <span class="hot">Q164R(99%)</span></td></tr>
-      <tr><td class="l">23K-CDCA</td><td class="l">F26Y(2%) · A30T(2%) · N32S(9%) · E143D(28%) · <span class="hot">Q164R(100%)</span></td></tr>
-      <tr><td class="l">LCA</td><td class="l">A150T(8%) · Q186H(3%) · <span class="hot">Q164R(99%)</span></td></tr>
-      <tr><td class="l">LLDCA</td><td class="l">K20E(7%) · I64T(16%) · K93I(10%) · A121T(10%) · R132C(8%) · A150V(8%) · P152L(16%) · <span class="hot">Q164R(98%)</span></td></tr>
-    </table>
-  </div>
+<section class="card"><h2>Where we are now</h2><div class="grid"><div class="col est"><h3>Established</h3><ul><li>Q164R enriched across all six bile-acid pools</li><li>17 designed sites are in the LBD</li><li>Pocket ↔ HTH long-range structural relationship</li><li>GraphWalks valley signal exists, but is weak</li></ul></div><div class="col no"><h3>Not established</h3><ul><li>Cross-bile-acid prediction ability</li><li>Target-specific mutation prediction</li><li>Pool frequency ≠ mutation effect</li><li>Recommender has no prospective validation</li></ul></div><div class="col next"><h3>Next</h3><ul><li>Paired genotype × ligand × response phenotype</li><li>Round-0 / lib0 baseline</li><li>Prospective validation</li><li>Strong-valley benchmark</li></ul></div></div><p class="lead" style="font-size:14px;margin:18px 0 0"><b>Current wording:</b> Q164R is the strongest shared mutation across six bile-acid selections and is located at the ligand-pocket wall, with structural evidence supporting a role in ligand recognition. Functional causality awaits paired phenotype validation.</p></section>
 
-  <div class="card">
-    <h2>② CDCA / 7K-LCA 新突变建议（AI 打分）</h2>
-    <p>Q164R 已确认关键。在它之外，模型给"还没试过的突变"打分，找其他可能有效的位点。两套结果对照：</p>
-    <h3>v4（跨靶点借鉴 + ESM2 + 别构，AUC 0.777 vs 随机 0.5）</h3>
-    <table>
-      <tr><th class="l">靶点</th><th class="l">Top 候选</th></tr>
-      <tr><td class="l">CDCA</td><td class="l">D176N(借7kLCA) · D176S/E · H174G · L177P · K93R · V158Q</td></tr>
-      <tr><td class="l">7K-LCA</td><td class="l">D176S/E · H174G · L177P · K93R · V158Q · A150G</td></tr>
-    </table>
-    <h3>v5 对接感知重排（本次新增，用<b>自身 ESMFold 口袋</b>距离 + 靶点结构分组先验）</h3>
-    <table>
-      <tr><th class="l">靶点</th><th class="l">Top 候选（口袋壁优先）</th><th>机制</th></tr>
-      <tr><td class="l">CDCA</td><td class="l"><b>F163L/I/M</b> · <b>S161N/T/G</b> · Y75I/L/F</td><td>163/161 距 Q164 仅 3.8/5.2Å，直接调 CDCA 识别</td></tr>
-      <tr><td class="l">7K-LCA</td><td class="l"><b>N66</b>(多替换) · F163L</td><td>66 = 7位修饰组邻域先验；163 口袋壁</td></tr>
-    </table>
-    <div class="note"><b>诚实说明：</b>v5 是"ESM2 可行性 + 口袋近邻 + 靶点分组先验"的<b>候选排序器</b>，不是靶点特异<b>预测器</b>。要真正预测靶点独有的次级突变，需 ①胆酸 SMILES 对接口袋 ②±胆酸 FACS 剂量响应（湿实验）。当前 top-50 只召回 1 个新正例，根因 = 训练靶点结构覆盖不全（缺 7 位修饰组代表），非方法错。</div>
-  </div>
+<section class="card"><h2>Two research tracks</h2><div class="tracks"><div class="track"><h3>A. Biosensor biology</h3><pre>bile-acid selection
+    ↓
+shared / ligand-associated mutations
+    ↓
+structural interpretation
+    ↓
+paired phenotype
+    ↓
+prospective validation</pre><b>Current bottleneck → paired phenotype</b></div><div class="track"><h3>B. GraphWalks method</h3><pre>338lib landscape
+    ↓
+directed mutation graph
+    ↓
+fitness valleys
+    ↓
+greedy vs lookahead
+    ↓
+verifiable benchmark</pre><b>Current → strong-valley benchmark</b></div></div></section>
 
-  <div class="card">
-    <h2>结构 → 突变分组规律（强，可验证）</h2>
-    <p>6 胆酸化学修饰集中在两处：甾核 <b>7 位</b>（环B）和 <b>侧链 C23</b>。突变响应位点<b>跟着修饰位置走</b>：</p>
-    <table>
-      <tr><th class="l">胆酸结构组</th><th class="l">成员</th><th class="l">特异突变位点</th></tr>
-      <tr><td class="l">7位修饰组</td><td class="l">LCA / 7k-LCA / UDCA(LLDCA)</td><td class="l">20,64,93,121,132,150,152,158,174,176</td></tr>
-      <tr><td class="l">侧链C23组</td><td class="l">PCA / 23k-CDCA</td><td class="l">32,79,143,177</td></tr>
-      <tr><td class="l">基准</td><td class="l">CDCA</td><td class="l">73</td></tr>
-      <tr><td class="l"><b>两组共有</b></td><td class="l">—</td><td class="l"><b>∅ 零重叠</b></td></tr>
-    </table>
-  </div>
-
-  <div class="card">
-    <h2>③ 思维图 · 整体课题思路</h2>
-    <div class="mermaid">
-flowchart TD
-  D["6 胆酸纳米孔测序<br/>+ 5轮 DNA 结合负筛<br/>+ 结构(自身ESMFold/3CDL)"] --> L["17 位点突变景观"]
-  L --> Q["★ Q164R = 6靶点通用开关<br/>(口袋壁 0Å, 直接围配体)"]
-  L --> S["各靶点特异次级突变<br/>D176N/E143D/I73N..."]
-  Q --> G["结构→突变分组规律<br/>7位组 vs C23组 零重叠"]
-  S --> G
-  G --> P["突变预测器 v4/v5<br/>ESM2+别构+口袋+分组先验"]
-  P --> V{"时序验证<br/>AUC 0.777 &gt; 随机"}
-  V -->|"超随机但<br/>召回低"| B["瓶颈: 靶点特异性<br/>= 训练结构覆盖不全"]
-  B --> N1["补: 胆酸SMILES对接"]
-  B --> N2["补: ±胆酸FACS配对数据<br/>(师兄湿实验)"]
-  B --> N3["补: lib0起始池基线"]
-  N1 & N2 & N3 --> GEN["跨胆酸/跨蛋白泛化<br/>(未建立→待验证)"]
-  Q --> GW["GraphWalks 任务化<br/>(不依赖湿实验, 可推进论文)"]
-  style Q fill:#fff5f5,stroke:#c53030,stroke-width:2px
-  style GEN fill:#fffaf0,stroke:#b7791f
-  style GW fill:#ebf8ff,stroke:#2b6cb0
-    </div>
-
-    <h2 style="margin-top:26px">思维图 · 突变预测聚焦</h2>
-    <div class="mermaid">
-flowchart LR
-  A["每组测序<br/>突变清单"] --> B["Q164R 通用<br/>+ 各组特异次级"]
-  B --> C["按胆酸结构分组<br/>7位 / C23侧链"]
-  C --> D["同组胆酸<br/>突变库互借"]
-  D --> E1["v4: 借鉴+ESM2+别构"]
-  D --> E2["v5: 自身口袋+分组先验"]
-  E1 & E2 --> F["CDCA→F163/S161(口袋壁)<br/>7kLCA→N66/D176(7位组)"]
-  F --> G["湿实验验证<br/>±胆酸剂量响应"]
-  style B fill:#fff5f5,stroke:#c53030
-  style F fill:#f0fff4,stroke:#2f855a
-    </div>
-  </div>
-
-  <footer>
-    脱敏公开镜像 · 不含原始测序数据/权重/凭据 · 生成脚本 <code>work/six_target_landscape.py</code> / <code>work/mutation_recommender_v5_dockaware.py</code>
-  </footer>
-</div>
-<script>mermaid.initialize({startOnLoad:true,theme:'neutral',flowchart:{curve:'basis'}});</script>
-</body>
-</html>
+<section class="card"><h2>Evidence</h2><div class="links"><a href="../STATUS.md">Status</a><a href="evidence/SELECTIONS.md">Bile-acid selections</a><a href="evidence/STRUCTURE.md">Structure</a><a href="evidence/GRAPHWALKS.md">GraphWalks</a><a href="evidence/PREDICTION.md">Prediction / recommender</a><a href="evidence/CLAIMS.md">Claims ledger</a><a href="next/NEXT_STAGE_ASSESSMENT_20260914.md">Next experiment</a></div></section>
+<footer>Public mirror · raw sequencing data, credentials, weights, and private artifacts are excluded · code and reproducible outputs remain in <a href="../work/">work/</a></footer>
+</main></body></html>
