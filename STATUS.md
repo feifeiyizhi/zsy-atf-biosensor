@@ -54,9 +54,12 @@ verifiable planning benchmark
 
 **Current next step:** build the strong-valley benchmark.
 
-## Evidence
+## Structure-conditioned diffusion direction
 
-See [`docs/EVIDENCE.md`](docs/EVIDENCE.md) for the source files and reproducible outputs behind this status.
+The longer-term direction is to reconstruct a target protein's local fitness/response landscape from sparse mutation measurements using sequence- and structure-conditioned diffusion. This is a proposal and implementation roadmap, not a completed model. See [`docs/STRUCTURE_CONDITIONED_DIFFUSION_PROPOSAL.md`](docs/STRUCTURE_CONDITIONED_DIFFUSION_PROPOSAL.md).
+
+The immediate prerequisites are a provenance-preserving public mutation-response manifest, mutation-sensitive structural features, masked-landscape baselines, and paired genotype × ligand × response measurements for the biosensor.
+
 
 ## Explicit non-claims
 

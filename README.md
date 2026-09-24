@@ -4,6 +4,7 @@ Computational analysis of directed evolution and ligand-dependent sequence–fun
 
 ![Project overview](docs/assets/4.webp)
 
+**Proposal → [Structure-conditioned diffusion landscape](docs/STRUCTURE_CONDITIONED_DIFFUSION_PROPOSAL.md)**
 **Current status → [STATUS.md](STATUS.md)**
 **Evidence → [docs/EVIDENCE.md](docs/EVIDENCE.md)**
 **Project page → https://feifeiyizhi.github.io/zsy-atf-biosensor/**

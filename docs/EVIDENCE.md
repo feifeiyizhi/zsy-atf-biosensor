@@ -25,6 +25,7 @@
 - **Plan** → [`docs/MMC2_LANDSCAPE_PLAN.md`](MMC2_LANDSCAPE_PLAN.md)
 - **Results** → [`work/results/mmc2_landscape/`](../work/results/mmc2_landscape/)
 
-## Reproducible code
+## Structure-conditioned diffusion proposal
 
-- **All code and generated outputs** → [`work/`](../work/)
+- **Full proposal** → [`docs/STRUCTURE_CONDITIONED_DIFFUSION_PROPOSAL.md`](STRUCTURE_CONDITIONED_DIFFUSION_PROPOSAL.md)
+- **Data collection entry point** → [`work/collect_mutation_response_data.py`](../work/collect_mutation_response_data.py)
