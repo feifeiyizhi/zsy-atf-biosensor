@@ -21,7 +21,7 @@ import urllib.request
 import zipfile
 from pathlib import Path
 
-DEFAULT_URL = "https://marks.hms.harvard.edu/proteingym/ProteinGym_substitutions.zip"
+DEFAULT_URL = "https://marks.hms.harvard.edu/proteingym/ProteinGym_v1.3/DMS_ProteinGym_substitutions.zip"
 
 
 def download(url: str, dest: Path) -> None:
@@ -60,7 +60,9 @@ def normalize_csv(path: Path, source: str, writer: csv.DictWriter, limit: int | 
         reader = csv.DictReader(f)
         for row in reader:
             protein = pick(row, ["protein_name", "protein_id", "DMS_id", "assay_id"])
-            sequence = pick(row, ["target_seq", "sequence", "seq"])
+            if not protein:
+                protein = path.stem
+            sequence = pick(row, ["target_seq", "sequence", "seq", "mutated_sequence"])
             mutant = pick(row, ["mutant", "mutant_name", "mutation", "variant"])
             response = pick(row, ["DMS_score", "fitness", "score", "mean_score", "measurement"])
             assay = pick(row, ["assay", "DMS_description", "description", "selection"])
@@ -81,7 +83,7 @@ def normalize_csv(path: Path, source: str, writer: csv.DictWriter, limit: int | 
                 "source": source,
             })
             count += 1
-            if limit and count >= limit:
+            if limit is not None and count >= limit:
                 break
     return count
 
@@ -121,9 +123,10 @@ def main() -> None:
         writer = csv.DictWriter(f, fieldnames=fields)
         writer.writeheader()
         for path in files:
-            total += normalize_csv(path, f"ProteinGym:{path.name}", writer, args.limit)
-            if args.limit and total >= args.limit:
+            remaining = None if args.limit is None else max(args.limit - total, 0)
+            if remaining == 0:
                 break
+            total += normalize_csv(path, f"ProteinGym:{path.name}", writer, remaining)
     report = {
         "source_url": args.url,
         "archive": str(archive),
