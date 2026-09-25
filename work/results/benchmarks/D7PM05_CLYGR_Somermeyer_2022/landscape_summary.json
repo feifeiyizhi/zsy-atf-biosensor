@@ -1,0 +1,14 @@
+{
+  "assay_id": "D7PM05_CLYGR_Somermeyer_2022",
+  "N_nodes": 24515,
+  "N_edges": 20513,
+  "N_connected_nodes": 12040,
+  "largest_connected_component_size": 12031,
+  "largest_connected_component_fraction": 0.49076075871915154,
+  "max_mutation_depth": 23,
+  "local_maxima": 1213,
+  "local_minima": 7784,
+  "fraction_nodes_with_improving_neighbors": 0.44164797063022637,
+  "fitness_min": 589.9999999999998,
+  "fitness_max": 40086.91476680549
+}

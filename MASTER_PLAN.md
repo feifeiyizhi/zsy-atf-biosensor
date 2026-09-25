@@ -6,41 +6,81 @@ Can multi-step planning outperform greedy mutation selection for protein fitness
 ## Primary endpoint
 Given the same experimental/query budget, does multi-step planning find higher-fitness protein variants than greedy search?
 
-## Pipeline status
-- [x] ProteinGym metadata integration
-- [x] assay eligibility audit
-- [x] benchmark manifest
-- [x] graph construction
-- [x] landscape diagnostics
-- [x] baseline algorithms
-- [x] oracle GraphWalks
-- [ ] partial-observation GraphWalks
-- [ ] cross-protein evaluation
-- [ ] 338lib external case study
-- [ ] ablations
-- [ ] paper-ready figures/tables
+## Canonical pipeline and exit gates
 
-## Current stage
-Phase C oracle task validation has expanded to five baselines. On 20 deterministic SPG1/Wu tasks at horizon 3, there were 3 `VALLEY_REQUIRED` tasks. Mean terminal fitness was random 0.140, greedy 3.572, beam-4 3.801, k-step lookahead 3.933, and oracle 3.950. Lookahead reached the oracle on all 3 valley-required tasks; greedy reached none. This remains a smoke result, not a final claim.
+### 01 SCOPE FREEZE — ✅ DONE
+Exit criteria:
+- [x] Protein fitness/activity and sequential mutation optimization are the primary scope.
+- [x] Ligand-specific response and bile-acid prediction are secondary/archive topics.
+- [x] Valley-required definition is explicit and non-contradictory.
 
-## Completed outputs
-- `MASTER_PLAN.md`: frozen operational research plan and valley definition.
-- `work/build_fitness_graph.py`: mutation-set indexed observed Hamming-1 graph builder.
-- `work/run_oracle_benchmark.py`: fixed-horizon oracle greedy comparison and valley task audit.
-- `work/results/benchmarks/SPG1_STRSG_Wu_2016/`: 149,360-node graph and first 50-task oracle run.
-- `work/collect_mutation_response_data.py`: provenance-preserving row collector with explicit missingness and protein-level splits.
-- `work/results/evolution_graph.json`: prior 338lib GraphWalks diagnostic (secondary case study; not yet on the common evaluation API).
-- `work/results/mmc2_landscape/`: existing LacI/GalR fitness benchmark outputs.
+### 02 FITNESS BENCHMARK / DATASET ELIGIBILITY — ✅ DONE
+Exit criteria:
+- [x] `benchmark_manifest.csv` exists.
+- [x] Eligibility logic is tested on real ProteinGym data.
+- [x] Eligible assays are identified.
+- [x] Rejected assays retain explicit reasons.
 
-## Blockers
-- ProteinGym substitution data are mostly single-mutant assays; GraphWalks eligibility must be measured assay by assay.
-- Processed ProteinGym tables do not provide response uncertainty/replicate counts; missing values remain explicit.
+### 03 LANDSCAPE GRAPH CONSTRUCTION — ✅ DONE
+Exit criteria:
+- [x] Unified mutation-set indexed graph builder works across eligible assays.
+- [x] Edges represent observed Hamming-1 mutation steps.
+- [x] Nodes, edges, connected components, mutation depths, and diagnostics are generated.
+- [x] SPG1/Wu and GFP smoke graphs are verified.
 
-## Next automatic action
-Run `python3 work/build_fitness_benchmark.py` against the cached ProteinGym archive, audit eligibility, then build graphs and run oracle greedy/lookahead comparisons only for eligible assays. Do not promote prediction-only assays into the GraphWalk benchmark.
+### 04 ORACLE BASELINE VALIDATION — ▶ IN PROGRESS
+Exit criteria:
+- [x] Random, greedy, beam, k-step lookahead, and oracle are implemented.
+- [x] All methods use identical task constraints.
+- [ ] Adequately sized task sets across multiple suitable assays are evaluated.
+- [ ] `VALLEY_REQUIRED` tasks are sufficiently represented.
+- [ ] Repeated seeds/confidence intervals are available where relevant.
+- [ ] Failure cases are inspected.
+- [ ] Results are recorded in `experiment_registry.csv`.
+Current gate: expand beyond 1 assay / 20 tasks / 3 valley-required tasks.
+
+### 05 CROSS-ASSAY / RUGGEDNESS VALIDATION — ○ NOT STARTED
+Exit criteria:
+- [ ] Multiple proteins/assays are evaluated with the same API.
+- [ ] Planning advantage is joined to ruggedness descriptors.
+- [ ] Assays where planning fails are included.
+- [ ] No cherry-picking is performed.
+
+### 06 PARTIAL-OBSERVATION BENCHMARK — ○ NOT STARTED
+Exit criteria:
+- [ ] Fixed query budgets are evaluated.
+- [ ] All methods receive identical initial observations and budgets.
+- [ ] Optimization metrics, not only prediction metrics, are reported.
+- [ ] Repeated seeds and failure cases are recorded.
+
+### 07 LEARNED GRAPHWALKS PLANNER — ○ NOT STARTED
+Exit criteria:
+- [ ] Simple models are compared before a learned planner.
+- [ ] Target/model leakage is prevented.
+- [ ] Held-out protein/landscape evaluation is complete.
+- [ ] Planner is compared with all fixed baselines.
+
+### 08 338LIB EXTERNAL CASE STUDY — ○ NOT STARTED
+Exit criteria:
+- [ ] Existing 338lib results are reproduced from code.
+- [ ] Same evaluation API is applied where data permit.
+- [ ] Missing round-0/lib0 measurements are not invented.
+
+### 09 ABLATIONS / PAPER FIGURES / FINAL STORY — ○ NOT STARTED
+Exit criteria:
+- [ ] Ablations and null/permutation checks are complete.
+- [ ] Experiment registry is the source for figures/tables.
+- [ ] Positive and negative datasets are reported.
+- [ ] Final claims match evidence strength.
+
+## Stable implementation entry points
+- `work/collect_mutation_response_data.py`
+- `work/build_fitness_benchmark.py`
+- `work/build_fitness_graph.py`
+- `work/run_oracle_benchmark.py`
 
 ## Scientific definitions
 - A graph edge is an observed Hamming-1 mutation between measured genotypes, not an embedding neighbor.
-- `VALLEY_REQUIRED` means every path from the start to a superior reachable target contains at least one strictly downhill edge; an existing downhill neighbor alone is insufficient.
+- `VALLEY_REQUIRED` means every non-repeating path from the start to a superior reachable target within the horizon contains at least one strictly downhill edge.
 - Monotonic paths, valley-crossing paths, and globally better trajectories are reported separately.
 - Fitness/activity is the primary target; ligand-specific response and bile-acid prediction are archived secondary work.

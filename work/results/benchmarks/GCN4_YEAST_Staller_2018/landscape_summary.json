@@ -1,0 +1,14 @@
+{
+  "assay_id": "GCN4_YEAST_Staller_2018",
+  "N_nodes": 2638,
+  "N_edges": 144,
+  "N_connected_nodes": 119,
+  "largest_connected_component_size": 57,
+  "largest_connected_component_fraction": 0.021607278241091737,
+  "max_mutation_depth": 44,
+  "local_maxima": 41,
+  "local_minima": 38,
+  "fraction_nodes_with_improving_neighbors": 0.029567854435178165,
+  "fitness_min": 0.0,
+  "fitness_max": 5.008590409
+}

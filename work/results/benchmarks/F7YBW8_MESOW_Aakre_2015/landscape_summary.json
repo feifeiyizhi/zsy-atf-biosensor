@@ -1,0 +1,14 @@
+{
+  "assay_id": "F7YBW8_MESOW_Aakre_2015",
+  "N_nodes": 9192,
+  "N_edges": 32428,
+  "N_connected_nodes": 9192,
+  "largest_connected_component_size": 9192,
+  "largest_connected_component_fraction": 1.0,
+  "max_mutation_depth": 4,
+  "local_maxima": 357,
+  "local_minima": 2089,
+  "fraction_nodes_with_improving_neighbors": 0.9611618798955613,
+  "fitness_min": -0.050666,
+  "fitness_max": 1.203698
+}

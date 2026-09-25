@@ -1,0 +1,14 @@
+{
+  "assay_id": "A4_HUMAN_Seuma_2022",
+  "N_nodes": 14811,
+  "N_edges": 28030,
+  "N_connected_nodes": 14268,
+  "largest_connected_component_size": 14268,
+  "largest_connected_component_fraction": 0.9633380595503342,
+  "max_mutation_depth": 2,
+  "local_maxima": 997,
+  "local_minima": 8428,
+  "fraction_nodes_with_improving_neighbors": 0.8960232259806901,
+  "fitness_min": -6.27026894923158,
+  "fitness_max": 3.33024926198835
+}
