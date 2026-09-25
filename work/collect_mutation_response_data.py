@@ -53,7 +53,17 @@ def pick(row: dict[str, str], names: list[str]) -> str:
     return ""
 
 
-def normalize_csv(path: Path, source: str, writer: csv.DictWriter, limit: int | None) -> int:
+def split_name(protein_id: str) -> str:
+    """Assign a protein deterministically; no protein appears in multiple splits."""
+    bucket = int(hashlib.sha256(protein_id.encode("utf-8")).hexdigest()[:8], 16) % 100
+    if bucket < 80:
+        return "train"
+    if bucket < 90:
+        return "validation"
+    return "test"
+
+
+def normalize_csv(path: Path, source: str, writer: csv.DictWriter, limit: int | None, split_counts: dict[str, int]) -> int:
     count = 0
     with path.open(newline="", encoding="utf-8-sig") as f:
         reader = csv.DictReader(f)
@@ -82,8 +92,10 @@ def normalize_csv(path: Path, source: str, writer: csv.DictWriter, limit: int | 
                 "mutation_count": len(mutations),
                 "response": response,
                 "assay": assay,
+                "split": split_name(protein),
                 "source": source,
             })
+            split_counts[split_name(protein)] += 1
             count += 1
             if limit is not None and count >= limit:
                 break
@@ -119,8 +131,9 @@ def main() -> None:
     if not files:
         raise SystemExit(f"No CSV files found after extracting {archive}")
     args.out.parent.mkdir(parents=True, exist_ok=True)
-    fields = ["protein_id", "sequence", "mutated_sequence", "mutant", "mutation_count", "response", "assay", "source"]
+    fields = ["protein_id", "sequence", "mutated_sequence", "mutant", "mutation_count", "response", "assay", "split", "source"]
     total = 0
+    split_counts = {"train": 0, "validation": 0, "test": 0}
     with args.out.open("w", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=fields)
         writer.writeheader()
@@ -128,13 +141,14 @@ def main() -> None:
             remaining = None if args.limit is None else max(args.limit - total, 0)
             if remaining == 0:
                 break
-            total += normalize_csv(path, f"ProteinGym:{path.name}", writer, remaining)
+            total += normalize_csv(path, f"ProteinGym:{path.name}", writer, remaining, split_counts)
     report = {
         "source_url": args.url,
         "archive": str(archive),
         "archive_sha256": digest,
         "csv_files_seen": len(files),
         "rows_written": total,
+        "split_counts": split_counts,
         "manifest": str(args.out),
         "public_repo_policy": "Do not commit raw archive or downloaded source tables; commit only schema/code and reviewed derived summaries.",
     }
