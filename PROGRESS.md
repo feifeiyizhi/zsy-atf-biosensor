@@ -1,6 +1,6 @@
 # Current phase
 
-06 — Closed-pool Partial Observation (`▶ IN PROGRESS`) after verified Phase 04 and Phase 05 exit gates.
+06 — Closed-pool Partial Observation (`✅ DONE`). Phase 07 is `HOLD / NOT STARTED` after the scientific gate.
 
 # Data location and public/private boundary
 
@@ -8,7 +8,7 @@ Real data and full graph tables remain under `/volume/schen04/ray/0724/`. The Gi
 
 # Pipeline
 
-✅ 01 Scope → ✅ 02 Benchmark → ✅ 03 Graph → ✅ 04 Oracle Closeout → ✅ 05 Landscape Characterization → ▶ 06 Partial Observation → ○ 07 Learned Planner → ○ 08 338lib → ○ 09 Paper
+✅ 01 Scope → ✅ 02 Benchmark → ✅ 03 Graph → ✅ 04 Oracle Closeout → ✅ 05 Landscape Characterization → ✅ 06 Partial Observation → ○ 07 Learned Planner (`HOLD`) → ○ 08 338lib → ○ 09 Paper
 
 # Phase 04 verified result
 
@@ -28,37 +28,32 @@ Real data and full graph tables remain under `/volume/schen04/ray/0724/`. The Gi
 
 # Scientific interpretation
 
-**SUPPORTED:** Planning advantage exists on some observed protein fitness landscapes under full information.
+**SUPPORTED:** Under strict hidden-fitness `LINEAGE_WALK`, H=3 adaptive lookahead helps on some assays and budgets, notably A4 and F7YBW8 at budget 100.
 
-**NOT ESTABLISHED:** Planning is generally superior across protein landscapes or recoverable when fitness is hidden. Phase 06 now tests the latter under closed-pool partial observation.
+**NOT ESTABLISHED:** H=3 planning is generally superior, is specifically better on valley-required tasks, or improves strict valley crossing. D7PM05 is a significant harm case and GCN4 is largely a sparse saturation/control case.
 
-# Current gate
+# Phase 06 closeout
 
-The strict Phase 06 method gate has passed; the paired scientific benchmark is not yet complete.
+The primary paired benchmark is complete:
 
-Primary protocol:
+- 154 unique starts: 74 `VALLEY_REQUIRED`, 80 `NO_VALLEY_REQUIRED`.
+- 3 policy seeds, 4 methods, requested budgets 10/20/50/100.
+- 7,392 records and 1,848 exact H=1/H=3 pairs.
+- 10,000 task-clustered bootstrap iterations after averaging policy seeds within unique tasks.
+- 0 audit errors across path, edge, no-repeat, budget, oracle, retraining, horizon, first-action, valley, calibration-pairing, and registry checks.
+- The prior 64 registry rows remain byte-identical; 7,392 strict-lineage rows were appended.
 
-- `LINEAGE_WALK`: each query must be an unqueried Hamming-1 neighbor of the current genotype; the queried node becomes current.
-- `ADAPTIVE_GREEDY` uses the shared Ridge surrogate with H=1.
-- `ADAPTIVE_LOOKAHEAD` uses the same surrogate with H=3, predicted terminal fitness, first-action execution, reveal, retrain, and replan.
-- `BUDGETED_WALK_ORACLE` supplies the primary budget-feasible regret reference.
-- Strict valley success is computed only from the actual executed lineage.
-- Query-zero top-threshold success is retained as `initially_solved`, not counted as policy success.
-- Pre-query prediction diagnostics are secondary to optimization metrics.
+Pooled H=3 minus H=1 normalized-regret deltas were +0.0013, -0.0030, -0.0158, and -0.0216 at budgets 10, 20, 50, and 100. Every pooled 95% paired bootstrap interval includes zero. At budget 100, A4 and F7YBW8 favor H=3, D7PM05 significantly favors H=1, and GCN4 is inconclusive.
 
-Eleven deterministic invariant tests pass. A 32-record real-data validation across all four assays passed path, budget, oracle, retraining, and pairing audits.
+The earlier 40-record smoke remains frozen as engineering-only `ACTIVE_FRONTIER_SEARCH` and is not used for valley-crossing claims. Full paired raw CSV/JSON remain on the shared volume; compact audit, analysis, and report artifacts are versioned.
 
-The earlier 40-record smoke remains frozen as engineering-only `ACTIVE_FRONTIER_SEARCH`. It does **not** establish planning advantage: F7YBW8 surrogate policies collapsed to the same poor outcome and GCN4 saturated rapidly.
-
-Frozen paired benchmark design: 154 unique starts across all four assays, up to 20 tasks per assay/stratum (F7YBW8 retains all 14 available valley starts), 3 policy seeds, 4 methods, and budgets 10/20/50/100, for 7,392 expected records.
-
-Phase 06 remains **IN PROGRESS**. Phase 07 has not started.
+Phase 06 is **DONE**. Phase 07 is **HOLD / NOT STARTED** because pooled and valley-specific H=3 benefits are not established and D7PM05 shows significant harm.
 
 # Next 3 actions
 
-1. Run and audit the 7,392-record paired `LINEAGE_WALK` benchmark.
-2. Produce paired bootstrap intervals for ADAPTIVE_LOOKAHEAD versus ADAPTIVE_GREEDY in ALL / VALLEY_REQUIRED / NO_VALLEY_REQUIRED strata.
-3. Report assay-specific positive and negative cases, surrogate-error diagnostics, and the Phase 07 gate decision without forcing a positive result.
+1. Test a fixed dead-end-aware objective against the frozen terminal-fitness H=3 policy without introducing a learned planner.
+2. Run controlled shared-calibration/surrogate-quality ablations that preserve current legal neighbors.
+3. Reconsider the Phase 07 gate only after paired Phase 06 ablations preserve both positive and negative assay results.
 
 # Blockers
 

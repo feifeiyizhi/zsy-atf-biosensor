@@ -1,0 +1,52 @@
+{
+  "records": 7392,
+  "tasks": 154,
+  "paired_groups": 1848,
+  "methods": [
+    "ADAPTIVE_GREEDY",
+    "ADAPTIVE_LOOKAHEAD",
+    "BUDGETED_WALK_ORACLE",
+    "RANDOM_WALK"
+  ],
+  "seeds": [
+    1,
+    2,
+    3
+  ],
+  "budgets": [
+    10,
+    20,
+    50,
+    100
+  ],
+  "strata_record_counts": {
+    "A4_HUMAN_Seuma_2022": {
+      "VALLEY_REQUIRED": 960,
+      "NO_VALLEY_REQUIRED": 960
+    },
+    "D7PM05_CLYGR_Somermeyer_2022": {
+      "VALLEY_REQUIRED": 960,
+      "NO_VALLEY_REQUIRED": 960
+    },
+    "F7YBW8_MESOW_Aakre_2015": {
+      "VALLEY_REQUIRED": 672,
+      "NO_VALLEY_REQUIRED": 960
+    },
+    "GCN4_YEAST_Staller_2018": {
+      "VALLEY_REQUIRED": 960,
+      "NO_VALLEY_REQUIRED": 960
+    }
+  },
+  "initially_solved_records": 1056,
+  "strict_valley_success_records": 1382,
+  "clipped_records": 5149,
+  "errors": [],
+  "registry": {
+    "prior_rows": 64,
+    "current_rows": 7456,
+    "lineage_rows": 7392,
+    "prior_prefix_byte_identical": true,
+    "lineage_rows_match_output": true
+  },
+  "status": "PASS"
+}

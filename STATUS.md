@@ -10,7 +10,7 @@
 | Q164R is enriched across all six bile-acid selection pools | Cross-bile-acid prediction ability | Paired genotype × ligand phenotype |
 | The 17 designed sites are in the LBD | Target-specific mutation prediction | Round-0 / lib0 baseline |
 | Pocket ↔ HTH is a long-range structural relationship | Pool frequency is not mutation effect | Prospective validation |
-| GraphWalks shows a real but weak valley signal | The recommender has not passed prospective validation | Strong-valley benchmark |
+| GraphWalks completed a strict partial-observation lineage benchmark | H=3 planning is not generally superior under hidden fitness | Simple dead-end and surrogate-quality ablations before any learned planner |
 
 ## Project interpretation
 
@@ -52,7 +52,7 @@ greedy vs lookahead
 verifiable planning benchmark
 ```
 
-**Current next step:** build the strong-valley benchmark.
+**Current next step:** keep Phase 07 on hold; use simple Phase 06 ablations to separate surrogate error, terminal-only planning, and dead-end selection.
 
 ## Structure-conditioned diffusion direction
 

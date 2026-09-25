@@ -48,7 +48,7 @@ Exit criteria:
 - [x] All assay-level relationships are labeled exploratory (N=4).
 Frozen result: `work/results/PHASE05_LANDSCAPE_REPORT.md`, `assay_landscape_diagnostics.csv`, and `task_difficulty.csv`.
 
-### 06 PARTIAL-OBSERVATION BENCHMARK — ▶ IN PROGRESS
+### 06 PARTIAL-OBSERVATION BENCHMARK — ✅ DONE
 Exit criteria:
 - [x] Strict `LINEAGE_WALK` protocol forbids teleporting across observed branches.
 - [x] `ADAPTIVE_GREEDY` (H=1) and `ADAPTIVE_LOOKAHEAD` (H=3) retrain the same Ridge surrogate after every reveal.
@@ -58,13 +58,15 @@ Exit criteria:
 - [x] Query-zero threshold success is separated as `initially_solved`.
 - [x] Pre-query surrogate diagnostics are recorded as secondary endpoints.
 - [x] Eleven deterministic invariant tests and a four-assay validation pass.
-- [ ] Paired multi-task/multi-seed benchmark is complete.
-- [ ] ALL / VALLEY_REQUIRED / NO_VALLEY_REQUIRED paired bootstrap intervals are complete.
-- [ ] Positive and negative assay cases are reported without selection.
+- [x] The paired multi-task/multi-seed benchmark is complete (154 unique starts; 7,392 records).
+- [x] ALL / VALLEY_REQUIRED / NO_VALLEY_REQUIRED task-clustered paired bootstrap intervals are complete.
+- [x] Positive and negative assay cases are reported without selection.
 
-The earlier `ACTIVE_FRONTIER_SEARCH` smoke remains frozen as engineering-only evidence and is not used for valley-crossing claims. Frozen method definition: `work/results/PHASE06_METHOD_GATE.md`.
+Frozen result: `work/results/PHASE06_LINEAGE_REPORT.md`, `phase06_lineage_analysis.json`, and `phase06_lineage_audit.json`.
 
-### 07 LEARNED GRAPHWALKS PLANNER — ○ NOT STARTED
+The earlier `ACTIVE_FRONTIER_SEARCH` smoke remains frozen as engineering-only evidence and is not used for valley-crossing claims. The primary result is assay-dependent: pooled H=3 benefit is not established, A4 and F7YBW8 contain positive cases, D7PM05 is a significant harm case, and GCN4 largely saturates.
+
+### 07 LEARNED GRAPHWALKS PLANNER — ○ HOLD / NOT STARTED
 Exit criteria:
 - [ ] Simple models are compared before a learned planner.
 - [ ] Target/model leakage is prevented.
