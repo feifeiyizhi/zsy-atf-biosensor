@@ -1,6 +1,6 @@
 # Current phase
 
-04 — Oracle Baseline Validation (`▶ IN PROGRESS`)
+04 — Oracle Baseline Validation (`▶ IN PROGRESS`), with data/structure foundation work running in parallel
 
 # Pipeline
 
