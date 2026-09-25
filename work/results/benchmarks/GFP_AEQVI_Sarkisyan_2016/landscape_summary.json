@@ -1,0 +1,14 @@
+{
+  "assay_id": "GFP_AEQVI_Sarkisyan_2016",
+  "N_nodes": 51714,
+  "N_edges": 29074,
+  "N_connected_nodes": 17514,
+  "largest_connected_component_size": 17472,
+  "largest_connected_component_fraction": 0.3378582202111614,
+  "max_mutation_depth": 15,
+  "local_maxima": 3598,
+  "local_minima": 8574,
+  "fraction_nodes_with_improving_neighbors": 0.26909540936690257,
+  "fitness_min": 1.28341923933,
+  "fitness_max": 4.12310906338
+}

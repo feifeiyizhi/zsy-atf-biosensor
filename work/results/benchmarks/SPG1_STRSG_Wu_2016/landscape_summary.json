@@ -1,0 +1,14 @@
+{
+  "assay_id": "SPG1_STRSG_Wu_2016",
+  "N_nodes": 149360,
+  "N_edges": 557984,
+  "N_connected_nodes": 149360,
+  "largest_connected_component_size": 149360,
+  "largest_connected_component_fraction": 1.0,
+  "max_mutation_depth": 4,
+  "local_maxima": 5938,
+  "local_minima": 41331,
+  "fraction_nodes_with_improving_neighbors": 0.9602437064809856,
+  "fitness_min": 0.0,
+  "fitness_max": 8.76196565571
+}

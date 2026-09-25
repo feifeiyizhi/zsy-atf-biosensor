@@ -1,0 +1,12 @@
+{
+  "nodes": 149360,
+  "edges": 557984,
+  "tasks": 50,
+  "horizon": 4,
+  "seed": 42,
+  "valley_required_tasks": 12,
+  "greedy_mean_terminal": 3.618640754974865,
+  "oracle_mean_terminal": 5.0473937995102,
+  "mean_regret": 1.428753044535335,
+  "valley_greedy_failures": 12
+}

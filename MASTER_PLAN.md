@@ -10,10 +10,10 @@ Given the same experimental/query budget, does multi-step planning find higher-f
 - [x] ProteinGym metadata integration
 - [x] assay eligibility audit
 - [x] benchmark manifest
-- [ ] graph construction
-- [ ] landscape diagnostics
-- [ ] baseline algorithms
-- [ ] oracle GraphWalks
+- [x] graph construction
+- [x] landscape diagnostics
+- [x] baseline algorithms
+- [x] oracle GraphWalks
 - [ ] partial-observation GraphWalks
 - [ ] cross-protein evaluation
 - [ ] 338lib external case study
@@ -21,11 +21,13 @@ Given the same experimental/query budget, does multi-step planning find higher-f
 - [ ] paper-ready figures/tables
 
 ## Current stage
-Phase A assay audit completed on the full ProteinGym v1.3 substitution archive: 217 assays and 2,465,767 normalized rows. The compiler classified 69 assays as `GRAPHWALK_ELIGIBLE` and 148 as `PREDICTION_ONLY`. The first graph targets are the eligible combinatorial assays with depth >2, especially SPG1/Wu, SPG1/Olson, GFP, HIS7, PHOT, and the Somermeyer landscapes.
+Phase C oracle task validation has started. On 50 deterministic SPG1/Wu tasks at horizon 4, the oracle found 12 `VALLEY_REQUIRED` tasks; greedy had positive regret on all 12. Across all tasks, oracle mean terminal fitness was 5.047 versus greedy 3.619 (mean regret 1.429). This is an initial smoke result, not a final claim; larger balanced task samples and other assays are required.
 
 ## Completed outputs
 - `MASTER_PLAN.md`: frozen operational research plan and valley definition.
-- `work/build_fitness_benchmark.py`: assay-level compiler with explicit GraphWalk eligibility and diagnostics.
+- `work/build_fitness_graph.py`: mutation-set indexed observed Hamming-1 graph builder.
+- `work/run_oracle_benchmark.py`: fixed-horizon oracle greedy comparison and valley task audit.
+- `work/results/benchmarks/SPG1_STRSG_Wu_2016/`: 149,360-node graph and first 50-task oracle run.
 - `work/collect_mutation_response_data.py`: provenance-preserving row collector with explicit missingness and protein-level splits.
 - `work/results/evolution_graph.json`: prior 338lib GraphWalks diagnostic (secondary case study; not yet on the common evaluation API).
 - `work/results/mmc2_landscape/`: existing LacI/GalR fitness benchmark outputs.
