@@ -21,6 +21,7 @@ import zipfile
 from pathlib import Path
 
 DEFAULT_URL = "https://marks.hms.harvard.edu/proteingym/ProteinGym_v1.3/DMS_ProteinGym_substitutions.zip"
+DEFAULT_METADATA_URL = "https://huggingface.co/datasets/OATML-Markslab/ProteinGym_v0.1/resolve/main/ProteinGym_reference_file_substitutions.csv"
 
 
 def download(url: str, dest: Path) -> None:
@@ -53,6 +54,33 @@ def pick(row: dict[str, str], names: list[str]) -> str:
     return ""
 
 
+def load_metadata(url: str, cache: Path) -> dict[str, dict[str, str]]:
+    path = cache / Path(url).name
+    if not path.exists():
+        download(url, path)
+    with path.open(newline="", encoding="utf-8-sig") as f:
+        rows = csv.DictReader(f)
+        metadata = {}
+        for row in rows:
+            filename = pick(row, ["DMS_filename"])
+            if filename:
+                metadata[Path(filename).name] = row
+    return metadata
+
+
+def metadata_for(path: Path, metadata: dict[str, dict[str, str]]) -> dict[str, str]:
+    if path.name in metadata:
+        return metadata[path.name]
+    stem_tokens = set(path.stem.lower().split("_"))
+    best = ({}, 0)
+    for filename, row in metadata.items():
+        tokens = set(Path(filename).stem.lower().split("_"))
+        overlap = len(stem_tokens & tokens)
+        if overlap > best[1] and overlap >= 3 and path.stem.split("_")[0].lower() in tokens:
+            best = (row, overlap)
+    return best[0]
+
+
 def split_name(protein_id: str) -> str:
     """Assign a protein deterministically; no protein appears in multiple splits."""
     bucket = int(hashlib.sha256(protein_id.encode("utf-8")).hexdigest()[:8], 16) % 100
@@ -63,20 +91,19 @@ def split_name(protein_id: str) -> str:
     return "test"
 
 
-def normalize_csv(path: Path, source: str, writer: csv.DictWriter, limit: int | None, split_counts: dict[str, int], missing_counts: dict[str, int]) -> int:
+def normalize_csv(path: Path, source: str, writer: csv.DictWriter, limit: int | None, split_counts: dict[str, int], missing_counts: dict[str, int], metadata: dict[str, dict[str, str]]) -> int:
     count = 0
     with path.open(newline="", encoding="utf-8-sig") as f:
         reader = csv.DictReader(f)
         for row in reader:
-            protein = pick(row, ["protein_name", "protein_id", "DMS_id", "assay_id"])
-            if not protein:
-                protein = path.stem
-            reference_sequence = pick(row, ["target_seq", "reference_sequence", "wild_type_sequence"])
+            meta = metadata_for(path, metadata)
+            protein = pick(row, ["protein_name", "protein_id", "DMS_id", "assay_id"]) or pick(meta, ["UniProt_ID", "DMS_id"]) or path.stem
+            reference_sequence = pick(row, ["target_seq", "reference_sequence", "wild_type_sequence"]) or pick(meta, ["target_seq"])
             mutated_sequence = pick(row, ["mutated_sequence", "variant_sequence"])
             sequence = reference_sequence
             mutant = pick(row, ["mutant", "mutant_name", "mutation", "variant"])
             response = pick(row, ["DMS_score", "fitness", "score", "mean_score", "measurement"])
-            assay = pick(row, ["assay", "DMS_description", "description", "selection"]) or path.stem
+            assay = pick(row, ["assay", "DMS_description", "description", "selection"]) or pick(meta, ["title", "molecule_name", "DMS_id"]) or path.stem
             if not mutant or not response:
                 continue
             try:
@@ -94,6 +121,8 @@ def normalize_csv(path: Path, source: str, writer: csv.DictWriter, limit: int | 
                 "response_sd": pick(row, ["DMS_score_sd", "fitness_sd", "score_sd", "measurement_sd"]),
                 "replicate_count": pick(row, ["replicate_count", "replicates", "n_replicates"]),
                 "assay": assay,
+                "uniprot_id": pick(meta, ["UniProt_ID"]),
+                "taxon": pick(meta, ["taxon", "source_organism"]),
                 "split": split_name(protein),
                 "source": source,
             }
@@ -111,6 +140,7 @@ def normalize_csv(path: Path, source: str, writer: csv.DictWriter, limit: int | 
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--url", default=DEFAULT_URL)
+    ap.add_argument("--metadata-url", default=DEFAULT_METADATA_URL)
     ap.add_argument("--cache", type=Path, default=Path("/mnt/workspace/ray/mutation_response_cache"))
     ap.add_argument("--out", type=Path, default=Path("work/results/mutation_response_manifest.csv"))
     ap.add_argument("--limit", type=int, default=None)
@@ -134,10 +164,11 @@ def main() -> None:
             z.extractall(extract)
 
     files = sorted(extract.rglob("*.csv"))
+    metadata = load_metadata(args.metadata_url, args.cache)
     if not files:
         raise SystemExit(f"No CSV files found after extracting {archive}")
     args.out.parent.mkdir(parents=True, exist_ok=True)
-    fields = ["protein_id", "sequence", "mutated_sequence", "mutant", "mutation_count", "response", "response_sd", "replicate_count", "assay", "split", "source"]
+    fields = ["protein_id", "uniprot_id", "taxon", "sequence", "mutated_sequence", "mutant", "mutation_count", "response", "response_sd", "replicate_count", "assay", "split", "source"]
     total = 0
     split_counts = {"train": 0, "validation": 0, "test": 0}
     missing_counts = {"sequence": 0, "response_sd": 0, "replicate_count": 0}
@@ -148,9 +179,11 @@ def main() -> None:
             remaining = None if args.limit is None else max(args.limit - total, 0)
             if remaining == 0:
                 break
-            total += normalize_csv(path, f"ProteinGym:{path.name}", writer, remaining, split_counts, missing_counts)
+            total += normalize_csv(path, f"ProteinGym:{path.name}", writer, remaining, split_counts, missing_counts, metadata)
     report = {
         "source_url": args.url,
+        "metadata_url": args.metadata_url,
+        "metadata_records": len(metadata),
         "archive": str(archive),
         "archive_sha256": digest,
         "csv_files_seen": len(files),

@@ -89,7 +89,8 @@ The initial implementation entry point is:
 work/collect_mutation_response_data.py
 ```
 
-Raw downloads remain outside the public repository. The repository should contain the schema, checksums, source manifest, and reviewed derived summaries—not an uncontrolled mirror of third-party datasets.
+For ProteinGym-style assays, join each processed CSV to the official reference metadata by `DMS_filename` (or a conservative filename-token match) to recover `target_seq`, `UniProt_ID`, taxon, assay title, and score-processing provenance. The join must be audited and must not silently attach metadata from a different assay.
+
 
 ### 4.2 Target-project data
 
