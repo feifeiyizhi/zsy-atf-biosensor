@@ -1,0 +1,9 @@
+{
+  "input": "/mnt/workspace/ray/mutation_response_manifest_full.csv",
+  "assays": 217,
+  "eligibility_counts": {
+    "PREDICTION_ONLY": 148,
+    "GRAPHWALK_ELIGIBLE": 69
+  },
+  "manifest": "work/results/benchmark_manifest.csv"
+}

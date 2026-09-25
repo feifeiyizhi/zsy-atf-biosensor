@@ -116,7 +116,7 @@ def main() -> None:
     records = [compile_assay(k, v) for k, v in sorted(groups.items())]
     fields = list(records[0]) if records else ['assay_id']
     with args.out.open('w', newline='', encoding='utf-8') as f:
-        w = csv.DictWriter(f, fieldnames=fields); w.writeheader(); w.writerows(records)
+        w = csv.DictWriter(f, fieldnames=fields, lineterminator='\\n'); w.writeheader(); w.writerows(records)
     summary = Counter(r['graphwalk_eligible'] for r in records)
     report = {'input': str(args.input), 'assays': len(records), 'eligibility_counts': dict(summary), 'manifest': str(args.out)}
     args.out.with_suffix('.json').write_text(json.dumps(report, indent=2) + '\n', encoding='utf-8')

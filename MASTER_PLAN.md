@@ -8,8 +8,8 @@ Given the same experimental/query budget, does multi-step planning find higher-f
 
 ## Pipeline status
 - [x] ProteinGym metadata integration
-- [ ] assay eligibility audit
-- [ ] benchmark manifest
+- [x] assay eligibility audit
+- [x] benchmark manifest
 - [ ] graph construction
 - [ ] landscape diagnostics
 - [ ] baseline algorithms
@@ -21,7 +21,7 @@ Given the same experimental/query budget, does multi-step planning find higher-f
 - [ ] paper-ready figures/tables
 
 ## Current stage
-Phase A assay audit completed on a 10,000-row real ProteinGym smoke manifest. The compiler found two assays and classified both as `PREDICTION_ONLY`: no observed multi-mutants, no Hamming-1 nested edges, and no depth-2 paths in this prefix. The next run must use the full archive before concluding that no ProteinGym assay is eligible.
+Phase A assay audit completed on the full ProteinGym v1.3 substitution archive: 217 assays and 2,465,767 normalized rows. The compiler classified 69 assays as `GRAPHWALK_ELIGIBLE` and 148 as `PREDICTION_ONLY`. The first graph targets are the eligible combinatorial assays with depth >2, especially SPG1/Wu, SPG1/Olson, GFP, HIS7, PHOT, and the Somermeyer landscapes.
 
 ## Completed outputs
 - `MASTER_PLAN.md`: frozen operational research plan and valley definition.
