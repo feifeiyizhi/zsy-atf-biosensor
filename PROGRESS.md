@@ -34,13 +34,28 @@ Real data and full graph tables remain under `/volume/schen04/ray/0724/`. The Gi
 
 # Current gate
 
-Implement one shared mutation-feature Ridge surrogate, paired calibration and budgets, hidden-fitness-safe policies, registry append, deterministic checks, and a multi-assay smoke test.
+Phase 06 mechanics and methodology-aligned smoke are verified; the full repeated-task/repeated-seed benchmark has not run.
+
+Verified smoke scope:
+
+- 2 deliberately selected valley-required tasks: F7YBW8 primary assay plus GCN4 sparse negative/control.
+- 1 seed, 5 paired methods, budgets 10/20/50/100, 40 records total.
+- Shared deterministic calibration and shared mutation-feature Ridge for all deployable policies.
+- `STATIC_SURROGATE_LOOKAHEAD` is static graph search over the current surrogate; it does not model future observations or retraining.
+- `CLAIRVOYANT_REFERENCE` uses hidden pool fitness but is not claimed to be the finite-budget optimum.
+- Target attainment and strict observed downhill target-path evidence are separate metrics.
+- Top-1%/top-5% success is calibration-adjusted; all 40 smoke records had already reached top-5% during calibration, so policy top-5% success is not informative and is reported as NA.
+- Surrogate R²/Spearman are explicitly in-sample observed-training-set diagnostics, not hidden-candidate generalization estimates.
+- Raw fitness AUC is retained, with normalized calibration-improvement AUC added for cross-assay scale handling.
+- Python syntax checks and 9/9 deterministic tests pass; paired groups, clipping, leakage boundary, idempotent append, and all 24 prior registry rows were verified.
+
+The smoke validates benchmark mechanics only. It does **not** establish a partial-observation planning advantage.
 
 # Next 3 actions
 
-1. Implement shared mutation-feature Ridge and hidden-fitness-safe query policies.
-2. Add paired iterative query metrics and budgets 10/20/50/100 with clipping.
-3. Run deterministic tests and a smoke benchmark including a primary assay and GCN4 control.
+1. Freeze this corrected Phase 06 smoke as its own coherent commit.
+2. Run a non-cherry-picked, paired multi-task/multi-seed benchmark across all suitable assays while retaining GCN4 as a control.
+3. Add task/seed-clustered paired uncertainty summaries and failure-case analysis before drawing Phase 06 scientific conclusions.
 
 # Blockers
 
