@@ -13,6 +13,7 @@ from run_partial_observation import (
     append_registry,
     calibration_nodes,
     normalized_auc_best_curve,
+    read_tasks,
     ridge_predict,
     run_policy,
     select_deployable_query,
@@ -71,6 +72,7 @@ class PartialObservationTests(unittest.TestCase):
         row = snapshot(
             "RANDOM", "toy", task, 1, 10, [5], [], [1.5], self.nodes,
             set(self.nodes), self.adj, [], 0.0, 3, 4, 1.0, "test",
+            "06_partial_observation_smoke",
         )
         self.assertTrue(row["calibration_top5_reached"])
         self.assertFalse(row["policy_top5_reached"])
@@ -95,6 +97,25 @@ class PartialObservationTests(unittest.TestCase):
             0.5,
         )
         self.assertIsNone(normalized_auc_best_curve([1.0, 1.0], 1.0, 1e-12))
+
+    def test_stratified_task_selection_is_balanced_and_deterministic(self):
+        rows = []
+        for index in range(8):
+            rows.append({
+                "assay": "toy", "seed": 1, "task_id": f"toy:s1:t{index:03d}",
+                "start_node": index, "best_reachable_fitness": 1.0,
+                "valley_required": str(index < 4),
+            })
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "tasks.csv"
+            with path.open("w", newline="", encoding="utf-8") as handle:
+                writer = csv.DictWriter(handle, fieldnames=list(rows[0]))
+                writer.writeheader(); writer.writerows(rows)
+            first = read_tasks(path, ["toy"], 4, "stratified_hash")
+            second = read_tasks(path, ["toy"], 4, "stratified_hash")
+        self.assertEqual(first, second)
+        self.assertEqual(sum(row["valley_required"] for row in first), 2)
+        self.assertEqual(len({row["start_node"] for row in first}), 4)
 
     def test_registry_append_is_idempotent(self):
         record = {

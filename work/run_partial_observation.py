@@ -183,7 +183,7 @@ def strict_downhill_path_exists(start, observed, adj, nodes, target, epsilon, ma
     return False
 
 
-def snapshot(method, assay, task, seed, requested_budget, calibration, queried, curve, nodes, component, adj, diagnostics, runtime, horizon, beam_width, alpha, code_version):
+def snapshot(method, assay, task, seed, requested_budget, calibration, queried, curve, nodes, component, adj, diagnostics, runtime, horizon, beam_width, alpha, code_version, phase):
     fitnesses = sorted(nodes[node]["fitness"] for node in component)
     pool_best, pool_start = fitnesses[-1], nodes[task["start_node"]]["fitness"]
     epsilon = max(1e-12, 1e-9 * max(abs(pool_best - pool_start), 1.0))
@@ -205,7 +205,7 @@ def snapshot(method, assay, task, seed, requested_budget, calibration, queried, 
         task["start_node"], observed_set, adj, nodes, target, epsilon, horizon
     ) if task["valley_required"] else None
     return {
-        "phase": "06_partial_observation_smoke",
+        "phase": phase,
         "assay": assay,
         "task_id": task["task_id"],
         "start_state": task["start_node"],
@@ -272,7 +272,7 @@ def snapshot(method, assay, task, seed, requested_budget, calibration, queried, 
     }
 
 
-def run_policy(method, assay, task, nodes, adj, mutations, budgets, calibration_count, horizon, beam_width, alpha, seed, code_version="phase06-smoke-v3"):
+def run_policy(method, assay, task, nodes, adj, mutations, budgets, calibration_count, horizon, beam_width, alpha, seed, code_version="phase06-smoke-v3", phase="06_partial_observation_smoke"):
     start = task["start_node"]
     component = connected_component(start, adj)
     calibration = calibration_nodes(start, component, adj, min(calibration_count, len(component)))
@@ -300,26 +300,52 @@ def run_policy(method, assay, task, nodes, adj, mutations, budgets, calibration_
         observed.add(query); queried.append(query); observed_fitness[query] = nodes[query]["fitness"]
         curve.append(max(curve[-1], nodes[query]["fitness"]))
         if query_index in budgets:
-            snapshots.append(snapshot(method, assay, task, seed, query_index, calibration, queried, curve, nodes, component, adj, diagnostics, time.perf_counter() - start_time, horizon, beam_width, alpha, code_version))
+            snapshots.append(snapshot(method, assay, task, seed, query_index, calibration, queried, curve, nodes, component, adj, diagnostics, time.perf_counter() - start_time, horizon, beam_width, alpha, code_version, phase))
     for budget in budgets:
         if budget > len(queried):
-            snapshots.append(snapshot(method, assay, task, seed, budget, calibration, queried, curve, nodes, component, adj, diagnostics, time.perf_counter() - start_time, horizon, beam_width, alpha, code_version))
+            snapshots.append(snapshot(method, assay, task, seed, budget, calibration, queried, curve, nodes, component, adj, diagnostics, time.perf_counter() - start_time, horizon, beam_width, alpha, code_version, phase))
     snapshots.sort(key=lambda row: row["requested_budget"])
     return snapshots
 
 
-def read_tasks(path, assays, tasks_per_assay):
+def task_hash(row):
+    key = f"{row['assay']}|{row['start_node']}|{row['valley_required']}"
+    return hashlib.sha256(key.encode()).hexdigest()
+
+
+def task_record(row):
+    return {
+        "assay": row["assay"], "task_id": row["task_id"],
+        "start_node": int(row["start_node"]),
+        "best_reachable_fitness": float(row["best_reachable_fitness"]),
+        "valley_required": row["valley_required"] == "True",
+    }
+
+
+def read_tasks(path, assays, tasks_per_assay, selection):
     with path.open(newline="", encoding="utf-8") as handle:
         rows = list(csv.DictReader(handle))
     selected = []
     for assay in assays:
         candidates = [row for row in rows if row["assay"] == assay and int(row["seed"]) == 1]
-        candidates.sort(key=lambda row: (row["valley_required"] != "True", row["task_id"]))
-        for row in candidates[:tasks_per_assay]:
-            selected.append({
-                "assay": assay, "task_id": row["task_id"], "start_node": int(row["start_node"]),
-                "best_reachable_fitness": float(row["best_reachable_fitness"]), "valley_required": row["valley_required"] == "True",
-            })
+        if selection == "smoke_valley_first":
+            candidates.sort(key=lambda row: (row["valley_required"] != "True", row["task_id"]))
+            chosen = candidates[:tasks_per_assay]
+        else:
+            if tasks_per_assay % 2:
+                raise ValueError("stratified_hash requires an even tasks_per_assay")
+            per_stratum = tasks_per_assay // 2
+            chosen = []
+            for label in ("True", "False"):
+                stratum = sorted(
+                    (row for row in candidates if row["valley_required"] == label),
+                    key=lambda row: (task_hash(row), row["task_id"]),
+                )
+                if len(stratum) < per_stratum:
+                    raise ValueError(f"{assay} has only {len(stratum)} tasks in stratum {label}")
+                chosen.extend(stratum[:per_stratum])
+            chosen.sort(key=lambda row: (row["valley_required"] != "True", task_hash(row)))
+        selected.extend(task_record(row) for row in chosen)
     return selected
 
 
@@ -365,6 +391,8 @@ def main():
     parser.add_argument("--out", type=Path, required=True)
     parser.add_argument("--assay", action="append", required=True)
     parser.add_argument("--tasks-per-assay", type=int, default=1)
+    parser.add_argument("--task-selection", choices=("smoke_valley_first", "stratified_hash"), default="smoke_valley_first")
+    parser.add_argument("--phase", default="06_partial_observation_smoke")
     parser.add_argument("--seed", action="append", type=int, default=[])
     parser.add_argument("--budgets", type=int, nargs="+", default=[10, 20, 50, 100])
     parser.add_argument("--calibration-count", type=int, default=5)
@@ -375,7 +403,7 @@ def main():
     parser.add_argument("--registry", type=Path)
     args = parser.parse_args()
     seeds = args.seed or [1]
-    tasks = read_tasks(args.tasks, args.assay, args.tasks_per_assay)
+    tasks = read_tasks(args.tasks, args.assay, args.tasks_per_assay, args.task_selection)
     records = []
     for task in tasks:
         assay_dir = args.benchmarks / task["assay"]
@@ -383,19 +411,21 @@ def main():
         mutations = mutation_sets(nodes)
         for seed in seeds:
             for method in METHODS:
-                records.extend(run_policy(method, task["assay"], task, nodes, adj, mutations, sorted(args.budgets), args.calibration_count, args.horizon, args.beam_width, args.ridge_alpha, seed, args.code_version))
+                records.extend(run_policy(method, task["assay"], task, nodes, adj, mutations, sorted(args.budgets), args.calibration_count, args.horizon, args.beam_width, args.ridge_alpha, seed, args.code_version, args.phase))
     args.out.parent.mkdir(parents=True, exist_ok=True)
     write_csv(args.out.with_suffix(".csv"), records)
+    run_status = "SMOKE_TEST" if args.phase.endswith("smoke") else "FULL_BENCHMARK"
     payload = {
         "setting": "closed-pool partial observation",
-        "status": "SMOKE_TEST",
+        "status": run_status,
         "hidden_fitness_rule": "deployable policies receive only observed fitness and surrogate predictions; CLAIRVOYANT_REFERENCE is isolated and is not labeled finite-budget optimal",
         "calibration": "start plus deterministic breadth-first neighbors, up to calibration_count; excluded from query budget and identical across policies",
+        "task_selection": args.task_selection,
         "budgets": sorted(args.budgets), "methods": list(METHODS), "records": records,
     }
     args.out.with_suffix(".json").write_text(json.dumps(payload, indent=2) + "\n")
     appended = append_registry(args.registry, records) if args.registry else 0
-    print(json.dumps({"status": "SMOKE_TEST", "tasks": len(tasks), "methods": len(METHODS), "records": len(records), "registry_rows_appended": appended, "out": str(args.out)}, indent=2))
+    print(json.dumps({"status": run_status, "tasks": len(tasks), "methods": len(METHODS), "records": len(records), "registry_rows_appended": appended, "out": str(args.out)}, indent=2))
 
 
 if __name__ == "__main__":
