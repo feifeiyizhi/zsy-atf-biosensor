@@ -21,7 +21,7 @@ Given the same experimental/query budget, does multi-step planning find higher-f
 - [ ] paper-ready figures/tables
 
 ## Current stage
-Phase C oracle task validation has started. On 50 deterministic SPG1/Wu tasks at horizon 4, the oracle found 12 `VALLEY_REQUIRED` tasks; greedy had positive regret on all 12. Across all tasks, oracle mean terminal fitness was 5.047 versus greedy 3.619 (mean regret 1.429). This is an initial smoke result, not a final claim; larger balanced task samples and other assays are required.
+Phase C oracle task validation has expanded to five baselines. On 20 deterministic SPG1/Wu tasks at horizon 3, there were 3 `VALLEY_REQUIRED` tasks. Mean terminal fitness was random 0.140, greedy 3.572, beam-4 3.801, k-step lookahead 3.933, and oracle 3.950. Lookahead reached the oracle on all 3 valley-required tasks; greedy reached none. This remains a smoke result, not a final claim.
 
 ## Completed outputs
 - `MASTER_PLAN.md`: frozen operational research plan and valley definition.
