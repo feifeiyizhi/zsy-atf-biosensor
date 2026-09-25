@@ -2,11 +2,10 @@
 """Collect public mutation-response datasets into a diffusion-training manifest.
 
 This script intentionally keeps downloaded archives/cache outside the public repo.
-It normalizes ProteinGym-style DMS tables to a compact manifest with:
-  protein_id, sequence, mutant, mutation_count, response, assay, source
-
-The manifest is a data inventory, not a claim that all assays measure the same
-biological activity. Downstream training must stratify by assay/protein.
+The manifest preserves both reference `sequence` when available and the observed
+`mutated_sequence`; ProteinGym substitution files commonly omit the wild-type
+sequence, so the collector leaves `sequence` empty rather than mislabeling a
+mutant sequence as wild type.
 """
 from __future__ import annotations
 
@@ -62,10 +61,12 @@ def normalize_csv(path: Path, source: str, writer: csv.DictWriter, limit: int | 
             protein = pick(row, ["protein_name", "protein_id", "DMS_id", "assay_id"])
             if not protein:
                 protein = path.stem
-            sequence = pick(row, ["target_seq", "sequence", "seq", "mutated_sequence"])
+            reference_sequence = pick(row, ["target_seq", "reference_sequence", "wild_type_sequence"])
+            mutated_sequence = pick(row, ["mutated_sequence", "variant_sequence"])
+            sequence = reference_sequence
             mutant = pick(row, ["mutant", "mutant_name", "mutation", "variant"])
             response = pick(row, ["DMS_score", "fitness", "score", "mean_score", "measurement"])
-            assay = pick(row, ["assay", "DMS_description", "description", "selection"])
+            assay = pick(row, ["assay", "DMS_description", "description", "selection"]) or path.stem
             if not mutant or not response:
                 continue
             try:
@@ -76,6 +77,7 @@ def normalize_csv(path: Path, source: str, writer: csv.DictWriter, limit: int | 
             writer.writerow({
                 "protein_id": protein,
                 "sequence": sequence,
+                "mutated_sequence": mutated_sequence,
                 "mutant": mutant,
                 "mutation_count": len(mutations),
                 "response": response,
@@ -117,7 +119,7 @@ def main() -> None:
     if not files:
         raise SystemExit(f"No CSV files found after extracting {archive}")
     args.out.parent.mkdir(parents=True, exist_ok=True)
-    fields = ["protein_id", "sequence", "mutant", "mutation_count", "response", "assay", "source"]
+    fields = ["protein_id", "sequence", "mutated_sequence", "mutant", "mutation_count", "response", "assay", "source"]
     total = 0
     with args.out.open("w", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=fields)

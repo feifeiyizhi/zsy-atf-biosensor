@@ -81,7 +81,7 @@ Collect public mutation-response datasets with explicit metadata, prioritizing:
 - selected multi-mutant combinatorial landscapes such as GB1 and LacI/GalR;
 - stability, binding, activity, growth, and fluorescence assays only when their measurement semantics are retained.
 
-The collector must preserve `protein_id`, wild-type sequence, mutant notation, mutation count, assay, raw/normalized score, uncertainty or replicate information, organism, and source accession. Do not pool scores across assays as if they were one universal activity scale.
+The collector must preserve `protein_id`, wild-type/reference sequence when available, observed mutant sequence when provided, mutant notation, mutation count, assay, raw/normalized score, uncertainty or replicate information, organism, and source accession. Do not pool scores across assays as if they were one universal activity scale. ProteinGym substitution tables may omit the wild-type sequence; in that case the manifest must leave the reference field empty and retain `mutated_sequence` explicitly rather than treating the observed mutant sequence as wild type.
 
 The initial implementation entry point is:
 
