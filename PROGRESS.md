@@ -34,28 +34,31 @@ Real data and full graph tables remain under `/volume/schen04/ray/0724/`. The Gi
 
 # Current gate
 
-Phase 06 mechanics and methodology-aligned smoke are verified; the full repeated-task/repeated-seed benchmark has not run.
+The strict Phase 06 method gate has passed; the paired scientific benchmark is not yet complete.
 
-Verified smoke scope:
+Primary protocol:
 
-- 2 deliberately selected valley-required tasks: F7YBW8 primary assay plus GCN4 sparse negative/control.
-- 1 seed, 5 paired methods, budgets 10/20/50/100, 40 records total.
-- Shared deterministic calibration and shared mutation-feature Ridge for all deployable policies.
-- `STATIC_SURROGATE_LOOKAHEAD` is static graph search over the current surrogate; it does not model future observations or retraining.
-- `CLAIRVOYANT_REFERENCE` uses hidden pool fitness but is not claimed to be the finite-budget optimum.
-- Target attainment and strict observed downhill target-path evidence are separate metrics.
-- Top-1%/top-5% success is calibration-adjusted; all 40 smoke records had already reached top-5% during calibration, so policy top-5% success is not informative and is reported as NA.
-- Surrogate R²/Spearman are explicitly in-sample observed-training-set diagnostics, not hidden-candidate generalization estimates.
-- Raw fitness AUC is retained, with normalized calibration-improvement AUC added for cross-assay scale handling.
-- Python syntax checks and 9/9 deterministic tests pass; paired groups, clipping, leakage boundary, idempotent append, and all 24 prior registry rows were verified.
+- `LINEAGE_WALK`: each query must be an unqueried Hamming-1 neighbor of the current genotype; the queried node becomes current.
+- `ADAPTIVE_GREEDY` uses the shared Ridge surrogate with H=1.
+- `ADAPTIVE_LOOKAHEAD` uses the same surrogate with H=3, predicted terminal fitness, first-action execution, reveal, retrain, and replan.
+- `BUDGETED_WALK_ORACLE` supplies the primary budget-feasible regret reference.
+- Strict valley success is computed only from the actual executed lineage.
+- Query-zero top-threshold success is retained as `initially_solved`, not counted as policy success.
+- Pre-query prediction diagnostics are secondary to optimization metrics.
 
-The smoke validates benchmark mechanics only. It does **not** establish a partial-observation planning advantage.
+Eleven deterministic invariant tests pass. A 32-record real-data validation across all four assays passed path, budget, oracle, retraining, and pairing audits.
+
+The earlier 40-record smoke remains frozen as engineering-only `ACTIVE_FRONTIER_SEARCH`. It does **not** establish planning advantage: F7YBW8 surrogate policies collapsed to the same poor outcome and GCN4 saturated rapidly.
+
+Frozen paired benchmark design: 154 unique starts across all four assays, up to 20 tasks per assay/stratum (F7YBW8 retains all 14 available valley starts), 3 policy seeds, 4 methods, and budgets 10/20/50/100, for 7,392 expected records.
+
+Phase 06 remains **IN PROGRESS**. Phase 07 has not started.
 
 # Next 3 actions
 
-1. Freeze this corrected Phase 06 smoke as its own coherent commit.
-2. Run a non-cherry-picked, paired multi-task/multi-seed benchmark across all suitable assays while retaining GCN4 as a control.
-3. Add task/seed-clustered paired uncertainty summaries and failure-case analysis before drawing Phase 06 scientific conclusions.
+1. Run and audit the 7,392-record paired `LINEAGE_WALK` benchmark.
+2. Produce paired bootstrap intervals for ADAPTIVE_LOOKAHEAD versus ADAPTIVE_GREEDY in ALL / VALLEY_REQUIRED / NO_VALLEY_REQUIRED strata.
+3. Report assay-specific positive and negative cases, surrogate-error diagnostics, and the Phase 07 gate decision without forcing a positive result.
 
 # Blockers
 

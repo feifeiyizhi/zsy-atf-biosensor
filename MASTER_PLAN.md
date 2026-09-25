@@ -50,10 +50,19 @@ Frozen result: `work/results/PHASE05_LANDSCAPE_REPORT.md`, `assay_landscape_diag
 
 ### 06 PARTIAL-OBSERVATION BENCHMARK — ▶ IN PROGRESS
 Exit criteria:
-- [ ] Fixed query budgets are evaluated.
-- [ ] All methods receive identical initial observations and budgets.
-- [ ] Optimization metrics, not only prediction metrics, are reported.
-- [ ] Repeated seeds and failure cases are recorded.
+- [x] Strict `LINEAGE_WALK` protocol forbids teleporting across observed branches.
+- [x] `ADAPTIVE_GREEDY` (H=1) and `ADAPTIVE_LOOKAHEAD` (H=3) retrain the same Ridge surrogate after every reveal.
+- [x] Lookahead optimizes predicted terminal fitness and executes only the first planned action.
+- [x] `BUDGETED_WALK_ORACLE` returns a valid budget-feasible path and supplies primary regret.
+- [x] Strict valley evidence is computed from the executed lineage only.
+- [x] Query-zero threshold success is separated as `initially_solved`.
+- [x] Pre-query surrogate diagnostics are recorded as secondary endpoints.
+- [x] Eleven deterministic invariant tests and a four-assay validation pass.
+- [ ] Paired multi-task/multi-seed benchmark is complete.
+- [ ] ALL / VALLEY_REQUIRED / NO_VALLEY_REQUIRED paired bootstrap intervals are complete.
+- [ ] Positive and negative assay cases are reported without selection.
+
+The earlier `ACTIVE_FRONTIER_SEARCH` smoke remains frozen as engineering-only evidence and is not used for valley-crossing claims. Frozen method definition: `work/results/PHASE06_METHOD_GATE.md`.
 
 ### 07 LEARNED GRAPHWALKS PLANNER — ○ NOT STARTED
 Exit criteria:
