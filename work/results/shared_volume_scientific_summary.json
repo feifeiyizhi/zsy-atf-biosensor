@@ -1,0 +1,44 @@
+{
+  "source_policy": "Reviewed summaries and paths only; raw data, PDB collections, full landscapes, and weights remain on /volume/schen04/ray/0724.",
+  "laci_full_length_esmfold": {
+    "source": "protein_graphwalks_structgw/out/fulllength_analysis.json",
+    "paired_structure_comparisons": 14,
+    "local_dbd_rmsd_median_angstrom": 0.3704076207,
+    "core_rmsd_median_angstrom": 0.1602846905,
+    "local_to_core_ratio_median": 2.2301456765,
+    "local_greater_than_core_pairs": 14,
+    "wilcoxon_p": 0.0001220703,
+    "interpretation": "Mutation-local structural response is detectable in this paired analysis; this is not evidence of predictive gain."
+  },
+  "laci_grouped_activity_gain": {
+    "source": "protein_graphwalks_structgw/out/fulllength_gain.json",
+    "n_variants": 919,
+    "n_components": 795,
+    "sequence_baseline_r2": 0.3649494800,
+    "template_feature_r2": 0.3204595233,
+    "full_length_esmfold_feature_r2": 0.2997547265,
+    "delta_full_vs_template_r2": -0.0207047968,
+    "delta_bootstrap_ci95": [-0.0787882095, 0.0566555340],
+    "interpretation": "Full-length ESMFold features did not improve grouped held-out activity prediction in this reviewed result; the interval crosses zero."
+  },
+  "gb1_landscape": {
+    "source": "paper_gw_bio/datasets/protein_graphwalks/05_gb1_graph_stats.json",
+    "wild_type": "VDGV",
+    "full_space_size": 160000,
+    "measured_variants": 149361,
+    "imputed_variants": 10639,
+    "measured_graph_components": 1,
+    "measured_graph_largest_component_fraction": 1.0,
+    "measured_edges_hamming1": true,
+    "measured_strict_dag": true,
+    "measured_local_maxima": 198,
+    "full_graph_local_maxima": 30,
+    "interpretation": "Measured-only and measured-plus-imputed landscapes are separate analyses; imputed values are not treated as experimental observations."
+  },
+  "registry_links": {
+    "oracle_robustness": "work/results/oracle_robustness.json",
+    "oracle_robustness_table": "work/results/oracle_robustness.csv",
+    "experiment_registry": "work/results/experiment_registry.csv",
+    "volume_asset_audit": "work/results/volume_asset_audit.json"
+  }
+}

@@ -23,7 +23,7 @@ Real data, PDB collections, full landscapes, and model weights are under `/volum
 - [x] Identical graph, starts, horizon, and seed used in smoke comparison.
 - [x] Four additional suitable assays evaluated with 3 seeds each.
 - [x] 600 total tasks and 123 `VALLEY_REQUIRED` tasks are recorded.
-- [ ] Confidence intervals / formal repeated-seed aggregation.
+- [x] Paired task-level bootstrap confidence intervals computed across 450 tasks.
 - [ ] Failure cases inspected in detail.
 - [x] `work/results/experiment_registry.csv` populated.
 
@@ -43,14 +43,14 @@ Lookahead mean regret was lower than greedy on A4 (0.041 vs 0.400), D7PM05 (1665
 
 # Evidence level
 
-PRELIMINARY. Cross-assay signal exists, but one assay shows lookahead underperforming greedy and formal confidence intervals/failure analysis are not complete.
+PRELIMINARY. Paired bootstrap intervals now support assay-specific claims: lookahead improves regret over greedy on A4 and F7YBW8; D7PM05 is uncertain overall but favorable on valley tasks; GCN4 is negative overall but favorable on valley tasks. This is not yet a universal planning claim.
 
 # Current blockers
 
-None. The current gate is statistical aggregation and failure analysis before Phase 04 can be marked done.
+None. Bootstrap aggregation is complete; the gate remains open for failure inspection and a defensible ruggedness/planning analysis.
 
 # Next 3 actions
 
 1. Compute per-assay repeated-seed confidence intervals and paired task-level comparisons.
 2. Inspect GCN4 failures and verify whether the valley definition or lookahead objective explains the negative result.
-3. Compute ruggedness descriptors and join planning advantage to `experiment_registry.csv`.
+3. Inspect GCN4 failures, then compute/join ruggedness descriptors to `experiment_registry.csv`.

@@ -1,0 +1,98 @@
+{
+  "method": "paired_task_bootstrap",
+  "bootstrap_replicates": 10000,
+  "assays": [
+    {
+      "assay": "A4_HUMAN_Seuma_2022",
+      "runs": 3,
+      "tasks": 150,
+      "valley_tasks": 22,
+      "mean_regret_delta_lookahead_minus_greedy": -0.359277804214622,
+      "bootstrap_ci95": [
+        -0.4772288317461787,
+        -0.24939864447803248
+      ],
+      "paired_lookahead_better_fraction": 0.3933333333333333,
+      "valley_mean_regret_delta": -1.5697214031400095,
+      "valley_bootstrap_ci95": [
+        -1.823054774857488,
+        -1.3091160693266217
+      ],
+      "graph_nodes": 14811,
+      "graph_edges": 28030,
+      "largest_component_fraction": 0.9633380595503342,
+      "max_mutation_depth": 2,
+      "local_maxima": 997,
+      "improving_neighbor_fraction": 0.8960232259806901
+    },
+    {
+      "assay": "D7PM05_CLYGR_Somermeyer_2022",
+      "runs": 3,
+      "tasks": 150,
+      "valley_tasks": 36,
+      "mean_regret_delta_lookahead_minus_greedy": -740.7480936693153,
+      "bootstrap_ci95": [
+        -1920.7096188804114,
+        285.19098079143146
+      ],
+      "paired_lookahead_better_fraction": 0.43333333333333335,
+      "valley_mean_regret_delta": -5324.287291879271,
+      "valley_bootstrap_ci95": [
+        -8613.300683526564,
+        -2520.5524386910697
+      ],
+      "graph_nodes": 24515,
+      "graph_edges": 20513,
+      "largest_component_fraction": 0.49076075871915154,
+      "max_mutation_depth": 23,
+      "local_maxima": 1213,
+      "improving_neighbor_fraction": 0.44164797063022637
+    },
+    {
+      "assay": "F7YBW8_MESOW_Aakre_2015",
+      "runs": 3,
+      "tasks": 150,
+      "valley_tasks": 14,
+      "mean_regret_delta_lookahead_minus_greedy": -0.048835673333333336,
+      "bootstrap_ci95": [
+        -0.08839033333333333,
+        -0.015169520000000013
+      ],
+      "paired_lookahead_better_fraction": 0.32,
+      "valley_mean_regret_delta": -0.5485051428571429,
+      "valley_bootstrap_ci95": [
+        -0.825977,
+        -0.2776728571428572
+      ],
+      "graph_nodes": 9192,
+      "graph_edges": 32428,
+      "largest_component_fraction": 1.0,
+      "max_mutation_depth": 4,
+      "local_maxima": 357,
+      "improving_neighbor_fraction": 0.9611618798955613
+    },
+    {
+      "assay": "GCN4_YEAST_Staller_2018",
+      "runs": 3,
+      "tasks": 150,
+      "valley_tasks": 51,
+      "mean_regret_delta_lookahead_minus_greedy": 0.027638481930000014,
+      "bootstrap_ci95": [
+        -0.02730441019333333,
+        0.08128942234444447
+      ],
+      "paired_lookahead_better_fraction": 0.36,
+      "valley_mean_regret_delta": -0.16565805065032677,
+      "valley_bootstrap_ci95": [
+        -0.27410702447385615,
+        -0.0733220565326797
+      ],
+      "graph_nodes": 2638,
+      "graph_edges": 144,
+      "largest_component_fraction": 0.021607278241091737,
+      "max_mutation_depth": 44,
+      "local_maxima": 41,
+      "improving_neighbor_fraction": 0.029567854435178165
+    }
+  ]
+}
