@@ -4,8 +4,8 @@
 This script intentionally keeps downloaded archives/cache outside the public repo.
 The manifest preserves both reference `sequence` when available and the observed
 `mutated_sequence`; ProteinGym substitution files commonly omit the wild-type
-sequence, so the collector leaves `sequence` empty rather than mislabeling a
-mutant sequence as wild type.
+sequence and replicate uncertainty, so those fields remain empty rather than
+being inferred or fabricated.
 """
 from __future__ import annotations
 
@@ -63,7 +63,7 @@ def split_name(protein_id: str) -> str:
     return "test"
 
 
-def normalize_csv(path: Path, source: str, writer: csv.DictWriter, limit: int | None, split_counts: dict[str, int]) -> int:
+def normalize_csv(path: Path, source: str, writer: csv.DictWriter, limit: int | None, split_counts: dict[str, int], missing_counts: dict[str, int]) -> int:
     count = 0
     with path.open(newline="", encoding="utf-8-sig") as f:
         reader = csv.DictReader(f)
@@ -84,17 +84,23 @@ def normalize_csv(path: Path, source: str, writer: csv.DictWriter, limit: int | 
             except ValueError:
                 continue
             mutations = split_mutants(mutant)
-            writer.writerow({
+            row_out = {
                 "protein_id": protein,
                 "sequence": sequence,
                 "mutated_sequence": mutated_sequence,
                 "mutant": mutant,
                 "mutation_count": len(mutations),
                 "response": response,
+                "response_sd": pick(row, ["DMS_score_sd", "fitness_sd", "score_sd", "measurement_sd"]),
+                "replicate_count": pick(row, ["replicate_count", "replicates", "n_replicates"]),
                 "assay": assay,
                 "split": split_name(protein),
                 "source": source,
-            })
+            }
+            for field in ("sequence", "response_sd", "replicate_count"):
+                if not row_out[field]:
+                    missing_counts[field] += 1
+            writer.writerow(row_out)
             split_counts[split_name(protein)] += 1
             count += 1
             if limit is not None and count >= limit:
@@ -131,9 +137,10 @@ def main() -> None:
     if not files:
         raise SystemExit(f"No CSV files found after extracting {archive}")
     args.out.parent.mkdir(parents=True, exist_ok=True)
-    fields = ["protein_id", "sequence", "mutated_sequence", "mutant", "mutation_count", "response", "assay", "split", "source"]
+    fields = ["protein_id", "sequence", "mutated_sequence", "mutant", "mutation_count", "response", "response_sd", "replicate_count", "assay", "split", "source"]
     total = 0
     split_counts = {"train": 0, "validation": 0, "test": 0}
+    missing_counts = {"sequence": 0, "response_sd": 0, "replicate_count": 0}
     with args.out.open("w", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=fields)
         writer.writeheader()
@@ -141,7 +148,7 @@ def main() -> None:
             remaining = None if args.limit is None else max(args.limit - total, 0)
             if remaining == 0:
                 break
-            total += normalize_csv(path, f"ProteinGym:{path.name}", writer, remaining, split_counts)
+            total += normalize_csv(path, f"ProteinGym:{path.name}", writer, remaining, split_counts, missing_counts)
     report = {
         "source_url": args.url,
         "archive": str(archive),
@@ -149,6 +156,7 @@ def main() -> None:
         "csv_files_seen": len(files),
         "rows_written": total,
         "split_counts": split_counts,
+        "missing_counts": missing_counts,
         "manifest": str(args.out),
         "public_repo_policy": "Do not commit raw archive or downloaded source tables; commit only schema/code and reviewed derived summaries.",
     }
