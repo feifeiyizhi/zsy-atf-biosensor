@@ -1,0 +1,67 @@
+{
+  "data_root": "/volume/schen04/ray/0724",
+  "public_repo_policy": "Record paths and reviewed summaries only; do not copy raw data, PDB collections, or model weights into the public mirror.",
+  "assets": {
+    "laci_project": {
+      "path": "/volume/schen04/ray/0724/protein_graphwalks_structgw",
+      "exists": true,
+      "bytes": 4096
+    },
+    "laci_deltaS": {
+      "path": "/volume/schen04/ray/0724/protein_graphwalks_structgw/out/variant_deltaS_activity.json",
+      "exists": true,
+      "bytes": 125579
+    },
+    "laci_full_length_analysis": {
+      "path": "/volume/schen04/ray/0724/protein_graphwalks_structgw/out/fulllength_analysis.json",
+      "exists": true,
+      "bytes": 5286
+    },
+    "laci_full_length_gain": {
+      "path": "/volume/schen04/ray/0724/protein_graphwalks_structgw/out/fulllength_gain.json",
+      "exists": true,
+      "bytes": 1112
+    },
+    "laci_full_length_edges": {
+      "path": "/volume/schen04/ray/0724/protein_graphwalks_structgw/out/fulllength_edges.csv",
+      "exists": true,
+      "bytes": 13279
+    },
+    "laci_full_length_manifest": {
+      "path": "/volume/schen04/ray/0724/protein_graphwalks_structgw/out/all_fulllength_manifest.json",
+      "exists": true,
+      "bytes": 221544
+    },
+    "gb1_summary": {
+      "path": "/volume/schen04/ray/0724/paper_gw_bio/data/landscape_summary.json",
+      "exists": true,
+      "bytes": 154
+    },
+    "gb1_graph_stats": {
+      "path": "/volume/schen04/ray/0724/paper_gw_bio/datasets/protein_graphwalks/05_gb1_graph_stats.json",
+      "exists": true,
+      "bytes": 12200
+    },
+    "gb1_data": {
+      "path": "/volume/schen04/ray/0724/paper_gw_bio/data/four_mutations_full_data.csv",
+      "exists": true,
+      "bytes": 46398100
+    },
+    "esmfold_weights": {
+      "path": "/volume/schen04/ray/0724/weights/esm/esmfold_3B_v1.pt",
+      "exists": true,
+      "bytes": 2771653574
+    },
+    "laci_esmfold_structures": {
+      "path": "/volume/schen04/ray/0724/protein_graphwalks_structgw/out/fulllength_structures",
+      "exists": true,
+      "bytes": 65536,
+      "file_count": 27
+    }
+  },
+  "scientific_boundaries": [
+    "Full-length ESMFold local response is a structural observation, not evidence of improved held-out activity prediction.",
+    "GB1 measured and imputed landscapes must remain separately labeled.",
+    "LacI template contact features and per-variant ESMFold deltas must be evaluated as separate feature families."
+  ]
+}

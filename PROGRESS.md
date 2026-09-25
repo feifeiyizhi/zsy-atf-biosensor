@@ -1,6 +1,17 @@
 # Current phase
 
-04 — Oracle Baseline Validation (`▶ IN PROGRESS`), with data/structure foundation work running in parallel
+04 — Oracle Baseline Validation (`▶ IN PROGRESS`), with mutation-sensitive structure and high-quality data foundation work running in parallel.
+
+# Data location and public/private boundary
+
+Real data, PDB collections, full landscapes, and model weights are under `/volume/schen04/ray/0724/`. GitHub is a de-identified public mirror. Only code, schemas, checksummed/reviewed summaries, and small audit artifacts belong in the repository; raw CSVs, PDB collections, full landscapes, credentials, and multi-GB weights stay on the shared volume.
+
+# Structure/data foundation status
+
+- Full-length LacI ESMFold assets exist on the shared volume: 1094 unique sequences, 27 currently visible PDB files in the checked directory, and reviewed full-length analysis artifacts.
+- Existing reviewed result: mutation-local structural response is present, but grouped held-out activity gain from full-length ESMFold features is negative/uncertain (`Delta R2 = -0.021`, CI crosses zero). This is a negative predictive result, not a failed engineering run.
+- The stronger current LacI feature is WT-template contact perturbation; ESMFold per-variant deltas remain a separate feature family.
+- GB1 measured/imputed landscape assets exist on the shared volume and must remain separately labeled.
 
 # Pipeline
 
