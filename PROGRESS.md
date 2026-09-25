@@ -1,56 +1,41 @@
 # Current phase
 
-04 — Oracle Baseline Validation (`▶ IN PROGRESS`), with mutation-sensitive structure and high-quality data foundation work running in parallel.
+05 — Cross-assay Landscape Characterization (`▶ IN PROGRESS`) after a verified Phase 04 closeout.
 
 # Data location and public/private boundary
 
-Real data, PDB collections, full landscapes, and model weights are under `/volume/schen04/ray/0724/`. GitHub is a de-identified public mirror. Only code, schemas, checksummed/reviewed summaries, and small audit artifacts belong in the repository; raw CSVs, PDB collections, full landscapes, credentials, and multi-GB weights stay on the shared volume.
-
-# Structure/data foundation status
-
-- Full-length LacI ESMFold assets exist on the shared volume: 1094 unique sequences, 27 currently visible PDB files in the checked directory, and reviewed full-length analysis artifacts.
-- Existing reviewed result: mutation-local structural response is present, but grouped held-out activity gain from full-length ESMFold features is negative/uncertain (`Delta R2 = -0.021`, CI crosses zero). This is a negative predictive result, not a failed engineering run.
-- The stronger current LacI feature is WT-template contact perturbation; ESMFold per-variant deltas remain a separate feature family.
-- GB1 measured/imputed landscape assets exist on the shared volume and must remain separately labeled.
+Real data and full graph tables remain under `/volume/schen04/ray/0724/`. The Git repository carries code and compact reproducible summaries; ignored raw CSV graph/task tables remain on the shared volume.
 
 # Pipeline
 
-✅ 01 Scope → ✅ 02 Benchmark → ✅ 03 Graph → ▶ 04 Oracle → ○ 05 Cross-assay → ○ 06 Partial observation → ○ 07 Learned planner → ○ 08 338lib → ○ 09 Ablations/paper
+✅ 01 Scope → ✅ 02 Benchmark → ✅ 03 Graph → ✅ 04 Oracle Closeout → ▶ 05 Landscape Characterization → ○ 06 Partial Observation → ○ 07 Learned Planner → ○ 08 338lib → ○ 09 Paper
 
-# Phase exit criteria
+# Phase 04 closeout
 
-- [x] Random, greedy, beam, k-step lookahead, and oracle implemented.
-- [x] Identical graph, starts, horizon, and seed used in smoke comparison.
-- [x] Four additional suitable assays evaluated with 3 seeds each.
-- [x] 600 total tasks and 123 `VALLEY_REQUIRED` tasks are recorded.
-- [x] Paired task-level bootstrap confidence intervals computed across 450 tasks.
-- [ ] Failure cases inspected in detail.
-- [x] `work/results/experiment_registry.csv` populated.
+- 4 assays, 4 proteins, 600 paired task records, 3 seeds/assay, horizon 3, beam width 4.
+- Recomputed `VALLEY_REQUIRED`: 123/600. The pasted value 132 is not reproduced.
+- Audit found and corrected unequal stopping semantics: greedy/oracle could stop early while beam/lookahead were forced to continue.
+- Corrected exact lookahead equals the bounded oracle on all 600 records; old results are retained under `work/results/phase04_precloseout/`.
+- All path, edge, horizon, seed sampling, regret-sign, and valley-label audits pass.
+- Clustered paired confidence intervals resample unique start states within assay because GCN4 repeats connected starts across seeds.
+- Raw regret is retained, with normalized regret and assay-IQR standardized planning gain added.
 
-# Latest experiment scale
+# Scientific interpretation
 
-- assays: 4 additional assays (A4, D7PM05, F7YBW8/Aakre, GCN4)
-- proteins: 4
-- tasks: 600
-- VALLEY_REQUIRED tasks: 123
-- seeds: 3 per assay
-- horizon: 3
-- beam width: 4
+**SUPPORTED:** Planning advantage exists on some observed protein fitness landscapes under full information.
 
-# Latest key result
+**NOT ESTABLISHED:** Planning is generally superior across protein landscapes. The four-assay result is preliminary; GCN4 remains a sparse graph/control case, and oracle performance does not imply recovery under hidden fitness.
 
-Lookahead mean regret was lower than greedy on A4 (0.041 vs 0.400), D7PM05 (1665 vs 2406), and F7YBW8 (0.016 vs 0.065), but worse on GCN4 (0.109 vs 0.081). The result is heterogeneous rather than universally positive.
+# Current gate
 
-# Evidence level
-
-PRELIMINARY. Paired bootstrap intervals now support assay-specific claims: lookahead improves regret over greedy on A4 and F7YBW8; D7PM05 is uncertain overall but favorable on valley tasks; GCN4 is negative overall but favorable on valley tasks. This is not yet a universal planning claim.
-
-# Current blockers
-
-None. Bootstrap aggregation is complete; the gate remains open for failure inspection and a defensible ruggedness/planning analysis.
+Phase 05 must generate consistent assay/task diagnostics, explicit graph-quality classes, exploratory-only N=4 associations, and a defensible Phase 06 assay set.
 
 # Next 3 actions
 
-1. Compute per-assay repeated-seed confidence intervals and paired task-level comparisons.
-2. Inspect GCN4 failures and verify whether the valley definition or lookahead objective explains the negative result.
-3. Inspect GCN4 failures, then compute/join ruggedness descriptors to `experiment_registry.csv`.
+1. Generate assay-level graph/fitness/task diagnostic metrics with explicit NA reasons.
+2. Generate task-level difficulty and valley descriptors from corrected Phase 04 records.
+3. Classify assay suitability, close Phase 05, then immediately implement Phase 06 closed-pool partial observation.
+
+# Blockers
+
+None.

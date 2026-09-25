@@ -53,19 +53,24 @@ def random_path(start, horizon, nodes, adj, rng):
 def beam_path(start, horizon, width, nodes, adj):
     beam = [[start]]
     for _ in range(horizon):
-        expanded = []
+        # Stopping is a valid action for every optimizing policy. Retain the
+        # current beam as well as one-step extensions so paths are at most,
+        # rather than exactly, ``horizon`` steps long.
+        expanded = list(beam)
         for path in beam:
             for nxt in sorted(adj[path[-1]]):
                 if nxt not in path: expanded.append(path + [nxt])
-        if not expanded: break
         expanded.sort(key=lambda p: (nodes[p[-1]]['fitness'], -len(p), -p[-1]), reverse=True)
-        beam = expanded[:width]
-    return max(beam, key=lambda p: (nodes[p[-1]]['fitness'], -p[-1]))
+        next_beam = expanded[:width]
+        if next_beam == beam: break
+        beam = next_beam
+    return max(beam, key=lambda p: (nodes[p[-1]]['fitness'], -len(p), -p[-1]))
 
 
 def lookahead_path(start, horizon, nodes, adj):
     # Exact bounded k-step lookahead: choose each move by the best reachable
     # terminal fitness in the remaining horizon, with no repeated genotype.
+    # As for greedy and oracle, stopping before the horizon is allowed.
     def value(path, remaining):
         if remaining == 0: return nodes[path[-1]]['fitness'], path
         choices = [(nodes[path[-1]]['fitness'], path)]
@@ -80,7 +85,8 @@ def lookahead_path(start, horizon, nodes, adj):
                 score, _ = value(path + [nxt], horizon - len(path))
                 candidates.append((score, nxt))
         if not candidates: break
-        _, nxt = max(candidates, key=lambda x: (x[0], -x[1]))
+        score, nxt = max(candidates, key=lambda x: (x[0], -x[1]))
+        if score <= nodes[path[-1]]['fitness']: break
         path.append(nxt)
     return path
 
@@ -119,10 +125,11 @@ def run(nodes_path, edges_path, out, starts, horizon, seed, beam_width):
                 if nxt not in path and nodes[nxt]['fitness'] >= nodes[cur]['fitness']:
                     stack.append((nxt, path + [nxt]))
         valley = oracle_fit > start_fit and not monotonic
-        rec = {'start_state': start, 'oracle_target': target, 'valley_required': valley}
+        rec = {'start_state': start, 'start_fitness': start_fit, 'oracle_target': target, 'valley_required': valley}
         for name, m in metrics.items():
             for key in ('terminal', 'best_seen', 'steps', 'min_delta', 'downhill_steps'):
                 rec[f'{name}_{key}'] = m[key]
+            rec[f'{name}_path'] = json.dumps(m['path'], separators=(',', ':'))
             rec[f'{name}_regret'] = oracle_fit - m['terminal']
         records.append(rec)
     out.parent.mkdir(parents=True, exist_ok=True)

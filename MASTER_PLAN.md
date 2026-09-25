@@ -28,23 +28,24 @@ Exit criteria:
 - [x] Nodes, edges, connected components, mutation depths, and diagnostics are generated.
 - [x] SPG1/Wu and GFP smoke graphs are verified.
 
-### 04 ORACLE BASELINE VALIDATION — ▶ IN PROGRESS
+### 04 ORACLE BASELINE VALIDATION — ✅ DONE
 Exit criteria:
 - [x] Random, greedy, beam, k-step lookahead, and oracle are implemented.
-- [x] All methods use identical task constraints.
-- [ ] Adequately sized task sets across multiple suitable assays are evaluated.
-- [ ] `VALLEY_REQUIRED` tasks are sufficiently represented.
-- [ ] Repeated seeds/confidence intervals are available where relevant.
-- [ ] Failure cases are inspected.
-- [ ] Results are recorded in `experiment_registry.csv`.
-Current gate: expand beyond 1 assay / 20 tasks / 3 valley-required tasks.
+- [x] All methods use identical task constraints, including the option to stop before the maximum horizon.
+- [x] Adequately sized task sets across four assays are evaluated (600 paired records).
+- [x] `VALLEY_REQUIRED` tasks are represented and independently audited (123/600).
+- [x] Repeated seeds and clustered paired confidence intervals are available.
+- [x] Failure cases and the pre-closeout forced-continuation defect are documented.
+- [x] Corrected results are recorded in `experiment_registry.csv` without overwriting the original rows.
+Frozen result: `work/results/PHASE04_ORACLE_REPORT.md` and `phase04_oracle_summary.{csv,json}`.
 
-### 05 CROSS-ASSAY / RUGGEDNESS VALIDATION — ○ NOT STARTED
+### 05 CROSS-ASSAY / RUGGEDNESS VALIDATION — ▶ IN PROGRESS
 Exit criteria:
-- [ ] Multiple proteins/assays are evaluated with the same API.
-- [ ] Planning advantage is joined to ruggedness descriptors.
-- [ ] Assays where planning fails are included.
-- [ ] No cherry-picking is performed.
+- [x] Multiple proteins/assays are evaluated with the same API.
+- [ ] Planning advantage is joined to consistent landscape and task descriptors.
+- [x] Sparse/negative-control assays are retained rather than cherry-picked.
+- [ ] Benchmark-quality classes and Phase 06 suitability are explicit.
+- [ ] All assay-level relationships are labeled exploratory (N=4).
 
 ### 06 PARTIAL-OBSERVATION BENCHMARK — ○ NOT STARTED
 Exit criteria:
