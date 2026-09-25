@@ -39,15 +39,16 @@ Exit criteria:
 - [x] Corrected results are recorded in `experiment_registry.csv` without overwriting the original rows.
 Frozen result: `work/results/PHASE04_ORACLE_REPORT.md` and `phase04_oracle_summary.{csv,json}`.
 
-### 05 CROSS-ASSAY / RUGGEDNESS VALIDATION — ▶ IN PROGRESS
+### 05 CROSS-ASSAY / RUGGEDNESS VALIDATION — ✅ DONE
 Exit criteria:
 - [x] Multiple proteins/assays are evaluated with the same API.
-- [ ] Planning advantage is joined to consistent landscape and task descriptors.
+- [x] Planning advantage is joined to consistent landscape and task descriptors.
 - [x] Sparse/negative-control assays are retained rather than cherry-picked.
-- [ ] Benchmark-quality classes and Phase 06 suitability are explicit.
-- [ ] All assay-level relationships are labeled exploratory (N=4).
+- [x] Benchmark-quality classes and Phase 06 suitability are explicit.
+- [x] All assay-level relationships are labeled exploratory (N=4).
+Frozen result: `work/results/PHASE05_LANDSCAPE_REPORT.md`, `assay_landscape_diagnostics.csv`, and `task_difficulty.csv`.
 
-### 06 PARTIAL-OBSERVATION BENCHMARK — ○ NOT STARTED
+### 06 PARTIAL-OBSERVATION BENCHMARK — ▶ IN PROGRESS
 Exit criteria:
 - [ ] Fixed query budgets are evaluated.
 - [ ] All methods receive identical initial observations and budgets.

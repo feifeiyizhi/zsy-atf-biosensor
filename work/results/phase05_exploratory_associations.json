@@ -1,0 +1,61 @@
+{
+  "label": "EXPLORATORY \u2014 N=4 ASSAYS",
+  "n_assays": 4,
+  "method": "descriptive assay-level Spearman rank correlation",
+  "planning_gain": "mean task-level normalized planning gain from corrected Phase 04",
+  "associations": {
+    "largest_connected_component_fraction": -1.0,
+    "greedy_failure_rate": 0.8,
+    "local_maxima_density_all_nodes": -0.4,
+    "valley_required_task_fraction": 1.0,
+    "fraction_isolated_nodes": 1.0,
+    "neighbor_fitness_correlation": -0.2
+  },
+  "assay_values": [
+    {
+      "assay": "A4_HUMAN_Seuma_2022",
+      "benchmark_quality_class": "WELL_CONNECTED",
+      "normalized_planning_gain": 0.1656209270514223,
+      "largest_connected_component_fraction": 0.9633380595503342,
+      "greedy_failure_rate": 0.3933333333333333,
+      "local_maxima_density_all_nodes": 0.06731483356964418,
+      "valley_required_task_fraction": 0.14666666666666667,
+      "fraction_isolated_nodes": 0.03666194044966579,
+      "neighbor_fitness_correlation": 0.3933989612505154
+    },
+    {
+      "assay": "D7PM05_CLYGR_Somermeyer_2022",
+      "benchmark_quality_class": "MODERATELY_CONNECTED",
+      "normalized_planning_gain": 0.1775575907546684,
+      "largest_connected_component_fraction": 0.49076075871915154,
+      "greedy_failure_rate": 0.49333333333333335,
+      "local_maxima_density_all_nodes": 0.04947991025902509,
+      "valley_required_task_fraction": 0.24,
+      "fraction_isolated_nodes": 0.5088721191107485,
+      "neighbor_fitness_correlation": 0.5149980219904547
+    },
+    {
+      "assay": "F7YBW8_MESOW_Aakre_2015",
+      "benchmark_quality_class": "WELL_CONNECTED",
+      "normalized_planning_gain": 0.07398793627208446,
+      "largest_connected_component_fraction": 1.0,
+      "greedy_failure_rate": 0.32666666666666666,
+      "local_maxima_density_all_nodes": 0.03883812010443864,
+      "valley_required_task_fraction": 0.09333333333333334,
+      "fraction_isolated_nodes": 0.0,
+      "neighbor_fitness_correlation": 0.26266984359766776
+    },
+    {
+      "assay": "GCN4_YEAST_Staller_2018",
+      "benchmark_quality_class": "SPARSE_NEGATIVE_CONTROL",
+      "normalized_planning_gain": 0.3034085446308131,
+      "largest_connected_component_fraction": 0.021607278241091737,
+      "greedy_failure_rate": 0.4533333333333333,
+      "local_maxima_density_all_nodes": 0.0155420773313116,
+      "valley_required_task_fraction": 0.34,
+      "fraction_isolated_nodes": 0.9548900682335102,
+      "neighbor_fitness_correlation": -0.014964910544346505
+    }
+  ],
+  "interpretation": "No formal generalization is supported. These four points define hypotheses and benchmark suitability only."
+}
