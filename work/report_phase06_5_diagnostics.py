@@ -48,8 +48,6 @@ def assay_evidence(task_rows, summary_rows, analysis):
         for row in rows:
             task_rows_unique.setdefault(row["task_id"], row)
         tasks = list(task_rows_unique.values())
-        true_opportunity = mean([value(row, "planning_opportunity_H3") for row in tasks])
-        surrogate_gain = mean([value(row, "realized_gain_H3") for row in tasks])
         top1 = mean([value(row, "H3_top1_action_accuracy") for row in tasks])
         actionable = mean([float(row["phase06_actionable_valley"] == "True") for row in tasks])
         horizon_rows = [
@@ -79,7 +77,9 @@ def assay_evidence(task_rows, summary_rows, analysis):
             horizon_cis[horizon] = interval
             if horizon > 1 and interval[0] is not None and interval[0] > 0:
                 supported_horizons.append(horizon)
+        h3_row = next(row for row in horizon_rows if int(row["horizon"]) == 3)
         h3_ci = horizon_cis[3]
+        true_opportunity = value(h3_row, "micro_H_vs_H1_mean_delta")
         surrogate_h3_row = next(
             row for row in summary_rows
             if row["scope"] == assay and row["budget"] == "100"
@@ -87,6 +87,7 @@ def assay_evidence(task_rows, summary_rows, analysis):
             and row["policy_type"] == "SURROGATE_HORIZON_DIAGNOSTIC"
             and row["horizon"] == "3"
         )
+        surrogate_gain = value(surrogate_h3_row, "micro_H_vs_H1_mean_delta")
         surrogate_h3_ci = (
             value(surrogate_h3_row, "micro_H_vs_H1_paired_ci_low"),
             value(surrogate_h3_row, "micro_H_vs_H1_paired_ci_high"),
