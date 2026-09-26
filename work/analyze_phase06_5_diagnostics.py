@@ -66,6 +66,25 @@ def bootstrap_ci(task_values, seed, iterations):
     return percentile(estimates, 0.025), percentile(estimates, 0.975)
 
 
+def macro_bootstrap_ci(subset, field, seed, iterations):
+    by_assay = defaultdict(list)
+    for row in subset:
+        value = row[field]
+        if value is not None and math.isfinite(value):
+            by_assay[row["assay"]].append(value)
+    if not by_assay:
+        return None, None
+    rng = np.random.default_rng(seed)
+    estimates = []
+    for _ in range(iterations):
+        assay_estimates = []
+        for values in by_assay.values():
+            sample = rng.choice(values, size=len(values), replace=True)
+            assay_estimates.append(float(np.mean(sample)))
+        estimates.append(float(np.mean(assay_estimates)))
+    return percentile(estimates, 0.025), percentile(estimates, 0.975)
+
+
 def local_summary(events):
     if not events:
         return {key: None for key in (
@@ -99,6 +118,8 @@ def downhill_failure(event, horizon):
     predicted_gain = event.get("future_predicted_gain_within_H")
     recovered = event.get("eventually_recovered")
     within = event.get("recovery_within_horizon")
+    recovery_exists = event.get("legal_recovery_path_exists")
+    recovery_steps = event.get("shortest_legal_recovery_steps")
     if true_gain is not None and true_gain >= 0 and within:
         return "USEFUL_VALLEY_RECOVERED"
     if predicted_gain is not None and predicted_gain > 0 and (true_gain is None or true_gain <= 0) and not recovered:
@@ -107,7 +128,9 @@ def downhill_failure(event, horizon):
         return "SURROGATE_RECOVERY_FAILURE"
     if recovered and not within:
         return "HORIZON_TOO_SHORT"
-    if not recovered:
+    if recovery_exists and recovery_steps is not None and recovery_steps > horizon:
+        return "HORIZON_TOO_SHORT"
+    if not recovered and recovery_exists is False:
         return "GRAPH_BLOCKED"
     return "UNRESOLVED"
 
@@ -264,6 +287,22 @@ def build_assay_summary(task_rows, iterations):
                             mean_defined([row[f"{prefix}_H{horizon}_performance"] for row in subset if row["assay"] == assay])
                             for assay in sorted({row["assay"] for row in subset})
                         ]
+                        delta_field = f"{prefix}_H{horizon}_vs_H1_delta"
+                        for row in subset:
+                            h_value = row[f"{prefix}_H{horizon}_performance"]
+                            h1_value = row[f"{prefix}_H1_performance"]
+                            row[delta_field] = None if h_value is None or h1_value is None else h_value - h1_value
+                        delta_values = [row[delta_field] for row in subset]
+                        delta_ci_low, delta_ci_high = bootstrap_ci(
+                            delta_values, seed_counter + 100000, iterations,
+                        )
+                        macro_ci_low, macro_ci_high = macro_bootstrap_ci(
+                            subset, delta_field, seed_counter + 200000, iterations,
+                        )
+                        assay_delta_means = [
+                            mean_defined([row[delta_field] for row in subset if row["assay"] == assay])
+                            for assay in sorted({row["assay"] for row in subset})
+                        ]
                         output.append({
                             "scope": scope,
                             "budget": budget,
@@ -276,6 +315,12 @@ def build_assay_summary(task_rows, iterations):
                             "macro_equal_assay_mean_performance": mean_defined(assay_means),
                             "within_scope_task_bootstrap_ci_low": ci_low,
                             "within_scope_task_bootstrap_ci_high": ci_high,
+                            "micro_H_vs_H1_mean_delta": mean_defined(delta_values),
+                            "micro_H_vs_H1_paired_ci_low": delta_ci_low,
+                            "micro_H_vs_H1_paired_ci_high": delta_ci_high,
+                            "macro_H_vs_H1_mean_delta": mean_defined(assay_delta_means),
+                            "macro_H_vs_H1_bootstrap_ci_low": macro_ci_low,
+                            "macro_H_vs_H1_bootstrap_ci_high": macro_ci_high,
                             "mean_actual_budget": mean_defined([row[f"{prefix}_H{horizon}_actual_budget"] for row in subset]),
                             "top1_action_accuracy": mean_defined([row[f"H{horizon}_top1_action_accuracy"] for row in subset]) if prefix == "SURROGATE" and horizon in (1, 3) else None,
                             "top3_action_recall": mean_defined([row[f"H{horizon}_top3_action_recall"] for row in subset]) if prefix == "SURROGATE" and horizon in (1, 3) else None,
@@ -290,19 +335,34 @@ def build_assay_summary(task_rows, iterations):
 def gcn4_saturation(task_rows):
     tasks = collapse_tasks(task_rows)
     gcn = [row for row in tasks if row["assay"].startswith("GCN4")]
+    ceiling = {
+        (row["assay"], row["task_id"]): row["budgeted_oracle_fitness"]
+        for row in gcn if row["budget"] == 100
+    }
+    earliest = {}
+    for row in sorted(gcn, key=lambda item: item["budget"]):
+        key = (row["assay"], row["task_id"])
+        target = ceiling.get(key)
+        if target is not None and math.isclose(row["budgeted_oracle_fitness"], target, rel_tol=0.0, abs_tol=1e-10):
+            earliest.setdefault(key, row["budget"])
     rows = []
     for budget in BUDGETS:
         subset = [row for row in gcn if row["budget"] == budget]
-        saturated = [
-            abs(row["TRUE_H1_best"] - row["budgeted_oracle_fitness"]) <= 1e-9 * max(abs(row["budgeted_oracle_fitness"]), 1.0)
-            for row in subset
-        ]
+        saturated = [earliest.get((row["assay"], row["task_id"]), math.inf) <= budget for row in subset]
         rows.append({
             "budget": budget,
             "tasks": len(subset),
-            "fraction_true_h1_at_budgeted_best": mean_defined([float(value) for value in saturated]),
+            "fraction_reachable_ceiling_saturated": mean_defined([float(value) for value in saturated]),
+            "median_earliest_saturation_budget": float(np.median([
+                earliest[(row["assay"], row["task_id"])] for row in subset
+                if (row["assay"], row["task_id"]) in earliest
+            ])) if subset else None,
             "median_component_size": float(np.median([row["reachable_component_size"] for row in subset])) if subset else None,
             "median_unique_legal_lineage_paths": float(np.median([row["unique_legal_lineage_paths"] for row in subset if row["unique_legal_lineage_paths"] is not None])) if subset else None,
+            "path_count_exact_fraction": mean_defined([
+                float(row["unique_legal_lineage_paths_exact"])
+                for row in subset if row["unique_legal_lineage_paths_exact"] is not None
+            ]),
         })
     return rows
 
